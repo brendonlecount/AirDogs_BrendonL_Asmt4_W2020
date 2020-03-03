@@ -1,0 +1,39 @@
+ty (character model)
+Mixamo
+https://www.mixamo.com/#/
+
+Rusty plane (model and texture)
+Not the same Production
+https://assetstore.unity.com/packages/3d/vehicles/air/rusty-plane-161892
+
+Customized Weapons - Low Poly (models and textures)
+IDALGAME
+https://assetstore.unity.com/packages/3d/props/weapons/customized-weapons-low-poly-161635
+
+Moss Surface (textures)
+Textures.com
+https://www.textures.com/download/pbr0426/137222
+
+3D Scanned Black Gravel (textures)
+Textures.com
+https://www.textures.com/download/3dscans0646/138423
+
+Enceladus Font Family (font)
+Pj154
+https://www.1001fonts.com/enceladus-font.html
+
+Parachute (model and textures)
+triloricci
+https://www.turbosquid.com/FullPreview/Index.cfm/ID/409304
+
+Crosshairs Plus (sprites)
+AssetBag
+https://assetstore.unity.com/packages/2d/gui/icons/crosshairs-plus-139902
+
+Simple Modern Crosshairs: Pack 1 (sprites)
+Visyde Interactives
+https://assetstore.unity.com/packages/2d/gui/icons/simple-modern-crosshairs-pack-1-79034
+
+Fx Explosion Pack (particle effects)
+GAPH
+https://assetstore.unity.com/packages/vfx/particles/fire-explosions/fx-explosion-pack-30102#reviews
