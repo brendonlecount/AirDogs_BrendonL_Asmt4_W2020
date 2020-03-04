@@ -8,8 +8,10 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private Rigidbody rb;
 	[SerializeField] private PilotController pilot;
 	[SerializeField] private ParticleSystem damageSmoke;
+	[SerializeField] private AudioSource propAudio;
 	[Header("Prefabs")]
 	[SerializeField] private GameObject deathExplosionPrefab;
+	[SerializeField] private GameObject explosionAudioPrefab;
 	[Header("Parameters")]
 	[SerializeField] private float torqueFactor;
 	[SerializeField] private float rightingTorqueFactor;
@@ -29,6 +31,15 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private float pitchLimitFactor;
 	[SerializeField] private float pitchYawRateLimit;
 	[SerializeField] private float explosionDelay;
+	[Header("Sound")]
+	[Range(0f, 1f)]
+	[SerializeField] private float propVolumeMin;
+	[Range(0f, 1f)]
+	[SerializeField] private float propVolumeMax;
+	[Range(1f, 3f)]
+	[SerializeField] private float propPitchMin;
+	[Range(1f, 3f)]
+	[SerializeField] private float propPitchMax;
 
 	private const float G = 9.81f;
 
@@ -62,6 +73,8 @@ public class BiplaneController : MonoBehaviour
 		set
 		{
 			thrust = Mathf.Clamp(value, 0f, thrustMax);
+			propAudio.volume = Mathf.Lerp(propVolumeMin, propVolumeMax, thrust / thrustMax);
+			propAudio.pitch = Mathf.Lerp(propPitchMin, propPitchMax, thrust / thrustMax);
 		}
 	}
 	private float thrust = 0f;
@@ -202,5 +215,6 @@ public class BiplaneController : MonoBehaviour
 		yield return new WaitForSeconds(explosionDelay);
 		gameObject.SetActive(false);
 		Instantiate(deathExplosionPrefab, transform.position, Quaternion.identity);
+		Instantiate(explosionAudioPrefab, transform.position, Quaternion.identity);
 	}
 }

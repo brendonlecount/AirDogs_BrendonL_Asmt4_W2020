@@ -47,7 +47,10 @@ public class PlayerInput : MonoBehaviour
 
 	private void SetThrust()
 	{
-		controller.Thrust += controller.ThrustMax * Input.GetAxis("Mouse ScrollWheel") * thrustSensitivity;
+		if (Input.GetAxisRaw("Mouse ScrollWheel") > 0.1f || Input.GetAxisRaw("Mouse ScrollWheel") < -0.1f)
+		{
+			controller.Thrust += controller.ThrustMax * Input.GetAxis("Mouse ScrollWheel") * thrustSensitivity;
+		}
 	}
 
 	private void FireWingGuns()

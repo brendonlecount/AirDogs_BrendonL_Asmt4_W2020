@@ -7,6 +7,7 @@ public class WingGun : MonoBehaviour
 	[SerializeField] private Rigidbody rb;
 	[SerializeField] private GameObject projectilePrefab;
 	[SerializeField] private Light muzzleFlashEffect;
+	[SerializeField] private AudioSource fireAudioSource;
 	[SerializeField] private float fireDelay;
 	[Range(0f, 1f)]
 	[SerializeField] private float spread;
@@ -38,10 +39,12 @@ public class WingGun : MonoBehaviour
 			firing = value;
 			if (firing && fireRoutine == null)
 			{
+				fireAudioSource.Play();
 				fireRoutine = StartCoroutine(FireRoutine());
 			}
 			else if (!firing && fireRoutine != null)
 			{
+				fireAudioSource.Stop();
 				StopCoroutine(fireRoutine);
 				fireRoutine = null;
 			}
