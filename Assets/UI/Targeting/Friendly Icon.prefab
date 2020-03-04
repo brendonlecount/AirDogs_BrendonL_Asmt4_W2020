@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1780082486182777664}
   - component: {fileID: 7250838025637117873}
   m_Layer: 5
-  m_Name: Target Icon
+  m_Name: Friendly Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,12 +59,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.57254905}
+  m_Color: {r: 0.027571797, g: 1, b: 0, a: 0.57254905}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300024, guid: db63fa1c2adceb141974024b30ffa6db, type: 3}
+  m_Sprite: {fileID: 21300026, guid: db63fa1c2adceb141974024b30ffa6db, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

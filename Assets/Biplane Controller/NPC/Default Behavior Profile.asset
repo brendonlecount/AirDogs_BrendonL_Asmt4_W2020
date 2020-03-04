@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61425c8cd6989e341b67f61b30d6a5c9, type: 3}
+  m_Name: Default Behavior Profile
+  m_EditorClassIdentifier: 
+  skillRating: 1
+  handlingLimit: 0.542
+  thrustMin: 0.505
+  thrustMax: 0.751
+  takeoffBehavior: {fileID: 1956432053506372289, guid: ff00cfc9fa603c640a4ac356ed0a4841,
+    type: 3}
+  patrolBehavior: {fileID: 7368716004602531599, guid: fbf17c376fa2fef4f924716b745ac5e2,
+    type: 3}

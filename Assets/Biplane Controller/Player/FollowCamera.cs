@@ -9,7 +9,6 @@ public class FollowCamera : MonoBehaviour
 	[SerializeField] private float lerpFactor;
 	[SerializeField] private float collisionRadius;
 
-	private BiplaneController targetController;
 	private Transform target;
 	private Quaternion lookAheadRotation;
 	private float offsetDistance;
@@ -17,8 +16,7 @@ public class FollowCamera : MonoBehaviour
 
 	private void Start()
     {
-		targetController = PlayerInput.Controller;
-		target = targetController.transform;
+		target = PlayerInput.Instance.transform;
 		lookAheadRotation = Quaternion.AngleAxis(lookAheadAngle, Vector3.left);
 		offsetDirection = cameraOffset.normalized;
 		offsetDistance = cameraOffset.magnitude;

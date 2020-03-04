@@ -16,6 +16,9 @@ MonoBehaviour:
   wingGuns:
   - {fileID: 4472086918552857461}
   - {fileID: 7481469913902894643}
+  isPlayerFaction: 0
+  entryBehavior: 0
+  behaviorProfile: {fileID: 11400000, guid: 521342309c6e0dc47bcf69da123b513c, type: 2}
 --- !u!1001 &391824500663134164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26,7 +29,7 @@ PrefabInstance:
     - target: {fileID: 7651332402188411081, guid: 0f61dac1e266ea644a082a0d4234bd67,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Biplane Variant
+      value: NPC Biplane
       objectReference: {fileID: 0}
     - target: {fileID: 7651332402188411083, guid: 0f61dac1e266ea644a082a0d4234bd67,
         type: 3}

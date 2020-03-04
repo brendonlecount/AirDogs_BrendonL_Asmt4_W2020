@@ -18,6 +18,7 @@ public class Targeting : MonoBehaviour
 		float maxAimRange;
 		float maxRange;
 		float minAlpha;
+		bool hasAiming;
 
 		public TargetIcon(GameObject targetIconPrefab, GameObject aimIconPrefab, BiplaneController controller, RectTransform iconParent, float maxAimRange, float maxTargetRange, float minIconAlpha)
 		{
@@ -33,9 +34,17 @@ public class Targeting : MonoBehaviour
 			targetGroup = targetTransform.GetComponent<CanvasGroup>();
 			targetTransform.gameObject.SetActive(false);
 
-			aimTransform = GameObject.Instantiate(aimIconPrefab, iconParent).GetComponent<RectTransform>();
-			aimGroup = aimTransform.GetComponent<CanvasGroup>();
-			aimTransform.gameObject.SetActive(false);
+			if (aimIconPrefab != null)
+			{
+				aimTransform = GameObject.Instantiate(aimIconPrefab, iconParent).GetComponent<RectTransform>();
+				aimGroup = aimTransform.GetComponent<CanvasGroup>();
+				aimTransform.gameObject.SetActive(false);
+				hasAiming = true;
+			}
+			else
+			{
+				hasAiming = false;
+			}
 		}
 
 		// https://answers.unity.com/questions/799616/unity-46-beta-19-how-to-convert-from-world-space-t.html
@@ -51,40 +60,43 @@ public class Targeting : MonoBehaviour
 					{
 						targetTransform.gameObject.SetActive(true);
 					}
-					float range = (PlayerInput.Controller.transform.position - controller.transform.position).magnitude;
+					float range = (PlayerInput.Instance.transform.position - controller.transform.position).magnitude;
 					targetGroup.alpha = Mathf.Lerp(1f, minAlpha, range / maxRange);
-					if (range <= maxAimRange)
+					if (hasAiming)
 					{
-						Vector3 aimPoint = target.position + controller.Rb.velocity * range / PlayerInput.ProjectileSpeed;
-						if (GetCanvasPosition(aimPoint, out canvasPosition))
+						if (range <= maxAimRange)
 						{
-							if (!aimTransform.gameObject.activeSelf)
+							Vector3 aimPoint = target.position + controller.Rb.velocity * range / PlayerInput.ProjectileSpeed;
+							if (GetCanvasPosition(aimPoint, out canvasPosition))
 							{
-								aimTransform.gameObject.SetActive(true);
+								if (!aimTransform.gameObject.activeSelf)
+								{
+									aimTransform.gameObject.SetActive(true);
+								}
+								aimTransform.localPosition = canvasPosition;
+								aimGroup.alpha = Mathf.Lerp(1f, minAlpha, range / maxRange);
 							}
-							aimTransform.localPosition = canvasPosition;
-							aimGroup.alpha = Mathf.Lerp(1f, minAlpha, range / maxRange);
+							else if (aimTransform.gameObject.activeSelf)
+							{
+								aimTransform.gameObject.SetActive(false);
+							}
 						}
 						else if (aimTransform.gameObject.activeSelf)
 						{
 							aimTransform.gameObject.SetActive(false);
 						}
 					}
-					else if (aimTransform.gameObject.activeSelf)
-					{
-						aimTransform.gameObject.SetActive(false);
-					}
 				}
 				else if (targetTransform.gameObject.activeSelf)
 				{
 					targetTransform.gameObject.SetActive(false);
-					aimTransform.gameObject.SetActive(false);
+					if (hasAiming) aimTransform.gameObject.SetActive(false);
 				}
 			}
 			else if (targetTransform.gameObject.activeInHierarchy)
 			{
 				targetTransform.gameObject.SetActive(false);
-				aimTransform.gameObject.SetActive(false);
+				if (hasAiming) aimTransform.gameObject.SetActive(false);
 			}
 		}
 
@@ -103,6 +115,7 @@ public class Targeting : MonoBehaviour
 		}
 	}
 
+	[SerializeField] private GameObject friendlyIconPrefab;
 	[SerializeField] private GameObject targetIconPrefab;
 	[SerializeField] private GameObject aimIconPrefab;
 	[SerializeField] private RectTransform targetIconParent;
@@ -115,11 +128,18 @@ public class Targeting : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        foreach(BiplaneController bc in TargetManager.GetEnemyBiplanes())
+        foreach(BiplaneControl bc in TargetManager.GetEnemyBiplanes())
 		{
-			targetIcons.Add(new TargetIcon(targetIconPrefab, aimIconPrefab, bc, targetIconParent, maxAimRange, targetDistanceMax, iconAlphaMin));
+			targetIcons.Add(new TargetIcon(targetIconPrefab, aimIconPrefab, bc.Controller, targetIconParent, maxAimRange, targetDistanceMax, iconAlphaMin));
 		}
-    }
+		foreach(BiplaneControl bc in TargetManager.GetFriendlyBiplanes())
+		{
+			if (bc != PlayerInput.Instance)
+			{
+				targetIcons.Add(new TargetIcon(friendlyIconPrefab, null, bc.Controller, targetIconParent, maxAimRange, targetDistanceMax, iconAlphaMin));
+			}
+		}
+	}
 
     // Update is called once per frame
     void Update()

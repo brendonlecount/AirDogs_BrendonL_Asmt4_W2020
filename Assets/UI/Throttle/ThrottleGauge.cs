@@ -13,11 +13,11 @@ public class ThrottleGauge : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		controller = PlayerInput.Controller;
-    }
+		controller = PlayerInput.Instance.Controller;
+	}
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
 		throttleImage.fillAmount = Mathf.Lerp(throttleImage.fillAmount, controller.Thrust / controller.ThrustMax, lerpFactor * Time.deltaTime);
     }

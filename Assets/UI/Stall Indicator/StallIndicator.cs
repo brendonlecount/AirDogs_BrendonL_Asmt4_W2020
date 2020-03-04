@@ -13,11 +13,11 @@ public class StallIndicator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		controller = PlayerInput.Controller;
-    }
+		controller = PlayerInput.Instance.Controller;
+	}
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
         if (controller.IsStalling && indicatorGroup.alpha < 1f)
 		{

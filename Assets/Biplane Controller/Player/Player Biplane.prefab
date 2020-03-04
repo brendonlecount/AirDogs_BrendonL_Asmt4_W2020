@@ -16,6 +16,7 @@ MonoBehaviour:
   wingGuns:
   - {fileID: 1210983612521875873}
   - {fileID: 5264084858255731943}
+  isPlayerFaction: 1
   thrustSensitivity: 0.125
   mouseSensitivity: 0.3
   invertMouse: 1

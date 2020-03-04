@@ -14,7 +14,7 @@ public class Speedometer : MonoBehaviour
 	// Start is called before the first frame update
     void Start()
     {
-		controller = PlayerInput.Controller;
+		controller = PlayerInput.Instance.Controller;
 	}
 
     // Update is called once per frame

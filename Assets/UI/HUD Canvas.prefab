@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4edadf6dae44bd479a1a66e71db94dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  friendlyIconPrefab: {fileID: 4251389449933581003, guid: c3c5a894d5e11d64bb4bda6c30d5d041,
+    type: 3}
   targetIconPrefab: {fileID: 4251389449933581003, guid: 3cea9a6fc8373cc4da441c950b62dfcb,
     type: 3}
   aimIconPrefab: {fileID: 2604677117287655601, guid: bcbc0bbc419c4d348bff39b431d5a578,

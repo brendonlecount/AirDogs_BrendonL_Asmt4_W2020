@@ -6,23 +6,33 @@ public class TargetManager : MonoBehaviour
 {
 	private static TargetManager instance = null;
 
-	private List<BiplaneController> enemyBiplanes = new List<BiplaneController>();
+	private List<BiplaneControl> enemyBiplanes = new List<BiplaneControl>();
+	private List<BiplaneControl> friendlyBiplanes = new List<BiplaneControl>();
 
 	private void Awake()
 	{
 		instance = this;
-		BiplaneController[] allBiplanes = FindObjectsOfType<BiplaneController>();
-		foreach (BiplaneController bc in allBiplanes)
+		BiplaneControl[] allBiplanes = FindObjectsOfType<BiplaneControl>();
+		foreach (BiplaneControl bc in allBiplanes)
 		{
-			if (bc.GetComponent<EnemyAI>() != null)
+			if (!bc.IsPlayerFaction)
 			{
 				enemyBiplanes.Add(bc);
+			}
+			else
+			{
+				friendlyBiplanes.Add(bc);
 			}
 		}
 	}
 
-	public static List<BiplaneController> GetEnemyBiplanes()
+	public static List<BiplaneControl> GetEnemyBiplanes()
 	{
 		return instance.enemyBiplanes;
+	}
+
+	public static List<BiplaneControl> GetFriendlyBiplanes()
+	{
+		return instance.friendlyBiplanes;
 	}
 }
