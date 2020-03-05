@@ -8,15 +8,20 @@ public class FollowCamera : MonoBehaviour
 	[SerializeField] private float lookAheadAngle;
 	[SerializeField] private float lerpFactor;
 	[SerializeField] private float collisionRadius;
+	[SerializeField] private float lerpTime;
 
 	private Transform target;
+	private Transform firstPersonNode;
 	private Quaternion lookAheadRotation;
 	private float offsetDistance;
 	private Vector3 offsetDirection;
+	private bool isFirstPerson = false;
+	private float lerpTimer;
 
 	private void Start()
     {
 		target = PlayerInput.Instance.transform;
+		firstPersonNode = PlayerInput.Instance.Controller.FirstPersonNode;
 		lookAheadRotation = Quaternion.AngleAxis(lookAheadAngle, Vector3.left);
 		offsetDirection = cameraOffset.normalized;
 		offsetDistance = cameraOffset.magnitude;
@@ -24,12 +29,32 @@ public class FollowCamera : MonoBehaviour
 		transform.rotation = GetRotationTarget();
     }
 
+	private void Update()
+	{
+		if (Input.GetButtonDown("Fire2"))
+		{
+			isFirstPerson = !isFirstPerson;
+		}
+	}
+
 	private void FixedUpdate()
     {
-		transform.position = Vector3.Lerp(transform.position, GetPositionTarget(), lerpFactor * Time.deltaTime);
+		if (!isFirstPerson)
+		{
+			transform.position = Vector3.Lerp(transform.position, GetPositionTarget(), lerpFactor * Time.deltaTime);
 
-		transform.rotation = Quaternion.Lerp(transform.rotation, GetRotationTarget(), lerpFactor * Time.deltaTime);
-    }
+			transform.rotation = Quaternion.Lerp(transform.rotation, GetRotationTarget(), lerpFactor * Time.deltaTime);
+		}
+	}
+
+	private void LateUpdate()
+	{
+		if (isFirstPerson)
+		{
+			transform.position = firstPersonNode.position;
+			transform.rotation = firstPersonNode.rotation;
+		}
+	}
 
 	private Vector3 GetPositionTarget()
 	{

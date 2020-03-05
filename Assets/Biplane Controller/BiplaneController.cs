@@ -9,6 +9,7 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private PilotController pilot;
 	[SerializeField] private ParticleSystem damageSmoke;
 	[SerializeField] private AudioSource propAudio;
+	[SerializeField] private Transform firstPersonNode;
 	[Header("Prefabs")]
 	[SerializeField] private GameObject deathExplosionPrefab;
 	[SerializeField] private GameObject explosionAudioPrefab;
@@ -81,6 +82,7 @@ public class BiplaneController : MonoBehaviour
 
 	// Component getters
 	public Rigidbody Rb => rb;
+	public Transform FirstPersonNode => firstPersonNode;
 
 	// physics properties
 	public float Speed { get; private set; } = 0f;

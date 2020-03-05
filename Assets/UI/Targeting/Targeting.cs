@@ -142,7 +142,7 @@ public class Targeting : MonoBehaviour
 	}
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         foreach (TargetIcon ti in targetIcons)
 		{
