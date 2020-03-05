@@ -96,7 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd65c4b76c35464486de3636ebd25e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 3373972912571411596}
   cameraOffset: {x: 0, y: 3, z: -10}
   lookAheadAngle: 15
   lerpFactor: 100
   collisionRadius: 0.6
+  firstPersonFOV: 40
+  transitionTime: 0.25
