@@ -57,7 +57,7 @@ MonoBehaviour:
   targetIconParent: {fileID: 4413679705064812486}
   maxAimRange: 300
   targetDistanceMax: 1000
-  iconAlphaMin: 0.2
+  iconAlphaMin: 0.4
 --- !u!1 &4413679704622555118
 GameObject:
   m_ObjectHideFlags: 0

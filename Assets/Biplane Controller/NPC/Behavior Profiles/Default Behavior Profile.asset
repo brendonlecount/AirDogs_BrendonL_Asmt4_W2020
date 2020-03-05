@@ -13,10 +13,20 @@ MonoBehaviour:
   m_Name: Default Behavior Profile
   m_EditorClassIdentifier: 
   skillRating: 1
+  aggroRadius: 500
+  loseAggroRadius: 750
   handlingLimit: 0.542
   thrustMin: 0.505
   thrustMax: 0.751
   takeoffBehavior: {fileID: 1956432053506372289, guid: ff00cfc9fa603c640a4ac356ed0a4841,
     type: 3}
   patrolBehavior: {fileID: 7368716004602531599, guid: fbf17c376fa2fef4f924716b745ac5e2,
+    type: 3}
+  attackBehavior: {fileID: 8520804042516813571, guid: d296aa0d759b8a84488997be01d5d49c,
+    type: 3}
+  evadeBehavior: {fileID: 3456563561379510024, guid: a48764e6d7dfbf140b13c56fc13f0a89,
+    type: 3}
+  followBehavior: {fileID: 5862029074519184707, guid: 591477b5a1e302f46951e21b24bc59e2,
+    type: 3}
+  deadBehavior: {fileID: 7102347051846206583, guid: 39995106712f2124f913f3e29743fdb9,
     type: 3}

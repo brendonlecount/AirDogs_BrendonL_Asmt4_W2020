@@ -66,7 +66,7 @@ public class Targeting : MonoBehaviour
 					{
 						if (range <= maxAimRange)
 						{
-							Vector3 aimPoint = target.position + controller.Rb.velocity * range / PlayerInput.ProjectileSpeed;
+							Vector3 aimPoint = target.position + controller.Rb.velocity * range / PlayerInput.Instance.ProjectileSpeed;
 							if (GetCanvasPosition(aimPoint, out canvasPosition))
 							{
 								if (!aimTransform.gameObject.activeSelf)

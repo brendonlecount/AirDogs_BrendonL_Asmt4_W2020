@@ -5,6 +5,7 @@ using UnityEngine;
 public class TakeoffBiplaneBehavior : BiplaneBehavior
 {
 	[SerializeField] private float targetElevation;
+	[SerializeField] private float takeOffAngle;
 
 	public override BiplaneBehaviorCode GetBehaviorCode()
 	{
@@ -13,17 +14,19 @@ public class TakeoffBiplaneBehavior : BiplaneBehavior
 
 	public override void EnterBehavior()
 	{
+		Debug.Log(controller.name + " taking off!");
 		controller.Thrust = controller.ThrustMax;
 		controller.YawRate = 0f;
-		controller.PitchRate = 0f;
+		controller.PitchRate = GetAngleRateFromTargetAngle(takeOffAngle, controller.Pitch, controller.PitchRate);
 	}
 
 	public override BiplaneBehaviorCode ExecuteBehavior()
 	{
 		if (controller.transform.position.y > targetElevation)
 		{
-			return BiplaneBehaviorCode.Patrol;
+			return GetDefaultBehavior();
 		}
+		controller.PitchRate = GetAngleRateFromTargetAngle(takeOffAngle, controller.Pitch, controller.PitchRate);
 		return BiplaneBehaviorCode.Takeoff;
 	}
 

@@ -9,8 +9,6 @@ public class PlayerInput : BiplaneControl
 	[SerializeField] private float mouseSensitivity;
 	[SerializeField] private bool invertMouse;
 
-	public static float ProjectileSpeed => instance.Controller.AxialSpeed + instance.WingGuns[0].ProjectileSpeed;
-
 	private static PlayerInput instance;
 	public static PlayerInput Instance => instance;
 

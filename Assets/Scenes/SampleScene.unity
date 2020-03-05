@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 37c6f80a9917c414b8aabcda7d9d0e61,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -448,6 +449,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1743911953 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4719975204931921353, guid: e4a36362c88436046ab7a8fd4a3a57eb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4719975204419759989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2081945858
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,10 +601,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3009461889921098898, guid: 3ead08bba38461e4db17ee361f96ef3e,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1743911953}
     - target: {fileID: 7378052912270707012, guid: 3ead08bba38461e4db17ee361f96ef3e,
         type: 3}
       propertyPath: m_Name
-      value: Enemy Biplane (1)
+      value: Friendly Biplane 01
       objectReference: {fileID: 0}
     - target: {fileID: 7378052912270707014, guid: 3ead08bba38461e4db17ee361f96ef3e,
         type: 3}
@@ -851,6 +863,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4511847068283189997, guid: 553b8a138fd1b0a40a30e02d978cf112,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1743911953}
     - target: {fileID: 8158992744985139001, guid: 553b8a138fd1b0a40a30e02d978cf112,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -923,7 +940,7 @@ PrefabInstance:
     - target: {fileID: 4719975204931921353, guid: e4a36362c88436046ab7a8fd4a3a57eb,
         type: 3}
       propertyPath: m_Name
-      value: Biplane
+      value: Player Biplane
       objectReference: {fileID: 0}
     - target: {fileID: 4719975204931921355, guid: e4a36362c88436046ab7a8fd4a3a57eb,
         type: 3}

@@ -7,6 +7,9 @@ public class BiplaneAI : BiplaneControl
 	[Header("Biplane AI Properties")]
 	[SerializeField] private BiplaneBehaviorCode entryBehavior;
 	[SerializeField] private BiplaneBehaviorProfile behaviorProfile;
+	public BiplaneBehaviorProfile BehaviorProfile => behaviorProfile;
+	[SerializeField] private GameObject target;
+	public GameObject Target => target;
 
 	private Dictionary<BiplaneBehaviorCode, BiplaneBehavior> behaviors;
 	private BiplaneBehavior currentBehavior;
@@ -16,7 +19,7 @@ public class BiplaneAI : BiplaneControl
     // Start is called before the first frame update
     void Start()
     {
-		behaviors = behaviorProfile.GetBehaviors(Controller, WingGuns);
+		behaviors = behaviorProfile.GetBehaviors(this);
 		currentBehavior = behaviors[entryBehavior];
 		currentBehavior.EnterBehavior();
     }

@@ -35,4 +35,22 @@ public class TargetManager : MonoBehaviour
 	{
 		return instance.friendlyBiplanes;
 	}
+
+	public static BiplaneControl GetTargetNearest(Vector3 position, float maxRange, bool isPlayerFaction)
+	{
+		List<BiplaneControl> targets = isPlayerFaction ? instance.friendlyBiplanes : instance.enemyBiplanes;
+		float r2 = maxRange * maxRange;
+		float d2Min = Mathf.Infinity;
+		BiplaneControl bestTarget = null;
+		foreach (BiplaneControl bc in targets)
+		{
+			float d2New = (bc.transform.position - position).sqrMagnitude;
+			if (d2New < d2Min && d2New < r2)
+			{
+				d2Min = d2New;
+				bestTarget = bc;
+			}
+		}
+		return bestTarget;
+	}
 }

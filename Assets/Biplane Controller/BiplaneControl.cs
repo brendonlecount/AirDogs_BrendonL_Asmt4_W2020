@@ -13,6 +13,8 @@ public class BiplaneControl : MonoBehaviour
 	public bool IsPlayerFaction => isPlayerFaction;
 	public BiplaneController Controller => controller;
 	public WingGun[] WingGuns => wingGuns;
+	public float ProjectileSpeed => Controller.AxialSpeed + WingGuns[0].ProjectileSpeed;
+
 
 	public virtual void SetIsPlayerFaction(bool isPlayerFaction)
 	{

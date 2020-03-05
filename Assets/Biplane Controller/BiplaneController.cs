@@ -6,10 +6,12 @@ public class BiplaneController : MonoBehaviour
 {
 	[Header("Components")]
 	[SerializeField] private Rigidbody rb;
+	public Rigidbody Rb => rb;
 	[SerializeField] private PilotController pilot;
 	[SerializeField] private ParticleSystem damageSmoke;
 	[SerializeField] private AudioSource propAudio;
 	[SerializeField] private Transform firstPersonNode;
+	public Transform FirstPersonNode => firstPersonNode;
 	[Header("Prefabs")]
 	[SerializeField] private GameObject deathExplosionPrefab;
 	[SerializeField] private GameObject explosionAudioPrefab;
@@ -18,6 +20,7 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private float rightingTorqueFactor;
 	[SerializeField] private float rightingTorqueDamping;
 	[SerializeField] private float thrustMax;
+	public float ThrustMax => thrustMax;
 	[SerializeField] private float healthMax;
 	[SerializeField] private float liftCoefficient;
 	[SerializeField] private float turnTrackingCoeff;
@@ -31,6 +34,7 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private float minPitch;
 	[SerializeField] private float pitchLimitFactor;
 	[SerializeField] private float pitchYawRateLimit;
+	public float PitchYawRateLimit => pitchYawRateLimit;
 	[SerializeField] private float explosionDelay;
 	[Header("Sound")]
 	[Range(0f, 1f)]
@@ -80,10 +84,6 @@ public class BiplaneController : MonoBehaviour
 	}
 	private float thrust = 0f;
 
-	// Component getters
-	public Rigidbody Rb => rb;
-	public Transform FirstPersonNode => firstPersonNode;
-
 	// physics properties
 	public float Speed { get; private set; } = 0f;
 	public Vector3 RelativeVelocity { get; private set; } = Vector3.zero;
@@ -93,8 +93,8 @@ public class BiplaneController : MonoBehaviour
 	public Vector3 RelativeAngularVelocity { get; private set; } = Vector3.zero;
 	public float Roll { get; private set; }
 	public float Pitch { get; private set; }
+	public float Yaw { get; private set; }
 
-	public float ThrustMax => thrustMax;
 	public float Health { get; private set; }
 	public bool IsDead { get; private set; } = false;
 	public bool IsStalling { get; private set; } = true;
@@ -128,7 +128,7 @@ public class BiplaneController : MonoBehaviour
 		Speed = RelativeVelocity.magnitude;
 		RelativeAngularVelocity = Quaternion.Inverse(transform.rotation) * rb.angularVelocity;
 		Roll = Vector3.SignedAngle(Vector3.up, transform.up, transform.forward);
-		float pitch = Mathf.Asin(transform.forward.y) * 180f / Mathf.PI;
+		float pitch = -Mathf.Asin(transform.forward.y) * Mathf.Rad2Deg;
 		while(pitch > 180f)
 		{
 			pitch -= 360f;
@@ -138,6 +138,7 @@ public class BiplaneController : MonoBehaviour
 			pitch += 360f;
 		}
 		Pitch = pitch;
+		Yaw = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up);
 	}
 
 	private Vector3 GetTorque()
