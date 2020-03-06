@@ -52,8 +52,11 @@ public class EvadeBiplaneBehavior : BiplaneBehavior
 
 	private IEnumerator EvadeRoutine()
 	{
-		evadeElevation = RandomElevation;
-		controller.YawRate = RandomRawRate;
-		yield return new WaitForSeconds(RandomEvadeTime);
+		while (true)
+		{
+			evadeElevation = RandomElevation;
+			controller.YawRate = RandomRawRate;
+			yield return new WaitForSeconds(RandomEvadeTime);
+		}
 	}
 }

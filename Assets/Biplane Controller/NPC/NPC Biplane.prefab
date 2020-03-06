@@ -18,7 +18,8 @@ MonoBehaviour:
   - {fileID: 7481469913902894643}
   isPlayerFaction: 0
   entryBehavior: 0
-  behaviorProfile: {fileID: 11400000, guid: 521342309c6e0dc47bcf69da123b513c, type: 2}
+  behaviorProfile: {fileID: 11400000, guid: 6c9f8bc12c5cb7248aa57dcebde0e6ac, type: 2}
+  target: {fileID: 0}
 --- !u!1001 &391824500663134164
 PrefabInstance:
   m_ObjectHideFlags: 0

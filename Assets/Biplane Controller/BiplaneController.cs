@@ -147,11 +147,11 @@ public class BiplaneController : MonoBehaviour
 		float pitchRate = PitchRate;
 		if (Pitch > maxPitch)
 		{
-			pitchRate = Mathf.Min((Pitch - maxPitch) * pitchLimitFactor, pitchYawRateLimit);
+			pitchRate = Mathf.Max((maxPitch - Pitch) * pitchLimitFactor, -pitchYawRateLimit);
 		}
 		else if (Pitch < minPitch)
 		{
-			pitchRate = Mathf.Max((Pitch - minPitch) * pitchLimitFactor, -pitchYawRateLimit);
+			pitchRate = Mathf.Min((minPitch - Pitch) * pitchLimitFactor, pitchYawRateLimit);
 		}
 		Vector3 targetAngularVelocity = new Vector3(pitchRate, YawRate, (rollTarget - Roll) * rightingTorqueFactor - RelativeAngularVelocity.z * rightingTorqueDamping);
 		return transform.rotation * ((targetAngularVelocity - RelativeAngularVelocity) * torqueFactor);

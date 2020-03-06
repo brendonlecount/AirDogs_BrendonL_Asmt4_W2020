@@ -50,8 +50,8 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 					{
 						SetFireWingGuns(false);
 					}
-					controller.YawRate = GetYawRateFromHeading(aimPoint - transform.position);
-					controller.PitchRate = GetPitchRateFromHeading(aimPoint - transform.position);
+					controller.YawRate = GetYawRateFromHeading(aimPoint - biplaneTransform.position);
+					controller.PitchRate = Mathf.Min(GetPitchRateFromHeading(aimPoint - biplaneTransform.position), GetPitchRateFromElevation(aggroTarget.transform.position.y));
 					controller.Thrust = GetFollowThrust(aggroTarget, attackDistance);
 					return BiplaneBehaviorCode.Attack;
 				}

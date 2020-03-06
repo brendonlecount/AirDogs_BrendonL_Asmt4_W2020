@@ -2262,7 +2262,7 @@ MonoBehaviour:
     type: 3}
   torqueFactor: 1
   rightingTorqueFactor: 0.08
-  rightingTorqueDamping: 24
+  rightingTorqueDamping: 4
   thrustMax: 1.2
   healthMax: 100
   liftCoefficient: 0.005

@@ -85,7 +85,7 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	protected bool IsInFront(BiplaneControl target)
 	{
 		Vector3 targetHeading = target.transform.position - biplaneTransform.position;
-		Vector3 currentHeading = controller.Rb.velocity;
+		Vector3 currentHeading = controller.transform.forward;
 		return Vector3.Dot(currentHeading, targetHeading) > 0f;
 	}
 
@@ -96,7 +96,12 @@ public abstract class BiplaneBehavior : MonoBehaviour
 
 	protected float GetRange(BiplaneControl target)
 	{
-		return (target.transform.position - biplaneAI.transform.position).magnitude;
+		return GetRange(target.transform.position);
+	}
+
+	protected float GetRange(Vector3 targetPosition)
+	{
+		return (targetPosition - biplaneAI.transform.position).magnitude;
 	}
 
 	protected BiplaneBehaviorCode GetDefaultBehavior()

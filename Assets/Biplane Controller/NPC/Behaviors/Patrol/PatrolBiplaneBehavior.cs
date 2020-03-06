@@ -48,6 +48,11 @@ public class PatrolBiplaneBehavior : BiplaneBehavior
 		}
 		else
 		{
+			float range = GetRange(patrolOrigin);
+			float approachYawRate = GetYawRateFromHeading(patrolOrigin - biplaneTransform.position);
+			float circleYawRate = GetYawRateFromHeading(Vector3.Cross(patrolOrigin - biplaneTransform.position, Vector3.up));
+			controller.YawRate = Mathf.Lerp(circleYawRate, approachYawRate, (range - patrolRadius * 0.75f) / (patrolRadius * 0.5f));
+
 			controller.PitchRate = GetPitchRateFromElevation(patrolElevation);
 			return BiplaneBehaviorCode.Patrol;
 		}
