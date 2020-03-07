@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Ace Behavior Profile
   m_EditorClassIdentifier: 
   skillRating: 5
+  elevationMin: 50
+  elevationMax: 300
   aggroRadius: 800
   loseAggroRadius: 1000
   handlingLimit: 1

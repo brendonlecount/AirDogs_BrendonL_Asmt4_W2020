@@ -43,5 +43,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548df212be4beb246979c74ae55b55c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetElevation: 20
-  takeOffAngle: -15
+  takeOffAngle: -10

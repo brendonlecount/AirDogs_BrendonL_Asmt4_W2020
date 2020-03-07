@@ -9,7 +9,7 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	private const float MAX_CORRECTION_ANGLE = 10f;
 	private const float CORRECTION_ANGLE_PER_METER = 2f;
 	private const float CORRECTION_ANGLE_RATE_PER_DEGREE = 0.2f;
-	private const float CORRECTION_ANGLE_RATE_DAMPING = 5f;
+	private const float CORRECTION_ANGLE_RATE_DAMPING = 0.2f;
 	private const float FOLLOW_THRUST_PER_METER = 0.1f;
 	private const float FOLLOW_THRUST_PER_MS = 0.01f;
 	
@@ -19,6 +19,7 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	protected WingGun[] wingGuns;
 	protected GameObject aiTarget;
 	protected BiplaneControl aiTargetControl = null;
+	protected PatrolNode aiTargetPatrolNode = null;
 	protected BiplaneBehaviorProfile behaviorProfile;
 
 	public abstract BiplaneBehaviorCode GetBehaviorCode();
@@ -28,27 +29,44 @@ public abstract class BiplaneBehavior : MonoBehaviour
 		this.controller = biplaneAI.Controller;
 		biplaneTransform = controller.transform;
 		this.wingGuns = biplaneAI.WingGuns;
-		this.aiTarget = biplaneAI.Target;
-		if (aiTarget != null)
-		{
-			aiTargetControl = aiTarget.GetComponent<BiplaneControl>();
-		}
 		this.behaviorProfile = biplaneAI.BehaviorProfile;
+		SetAiTarget(biplaneAI.Target);
 	}
 	public abstract void EnterBehavior();
 	public abstract BiplaneBehaviorCode ExecuteBehavior();
 	public abstract void ExitBehavior();
 
+	public virtual void SetAiTarget(GameObject aiTarget)
+	{
+		this.aiTarget = aiTarget;
+		if (aiTarget != null)
+		{
+			aiTargetControl = aiTarget.GetComponent<BiplaneControl>();
+			aiTargetPatrolNode = aiTarget.GetComponent<PatrolNode>();
+		}
+	}
+
 
 	protected float GetPitchRateFromElevation(float targetElevation)
 	{
 		float altitudeError = biplaneTransform.position.y - targetElevation;
-		float targetPitch = Mathf.Clamp(altitudeError * CORRECTION_ANGLE_RATE_PER_DEGREE, -MAX_CORRECTION_ANGLE, MAX_CORRECTION_ANGLE);
-		return GetAngleRateFromTargetAngle(targetPitch, controller.Pitch, controller.PitchRate);
+		float targetPitch = Mathf.Clamp(altitudeError * CORRECTION_ANGLE_PER_METER, -MAX_CORRECTION_ANGLE, MAX_CORRECTION_ANGLE);
+		float targetPitchRate = GetAngleRateFromTargetAngle(targetPitch, controller.Pitch, controller.PitchRate);
+		// I was calculating pitch with the wrong sign initially (damn Unity's left hand rule), which made this very obnoxious to debug...
+		// When I finally fixed it the AI started wrecking me lol
+//		Debug.Log(controller.name);
+//		Debug.Log("Elevation: " + biplaneTransform.position.y + " Target: " + targetElevation.ToString("N0"));
+//		Debug.Log("Pitch: " + controller.Pitch.ToString("N1") + " Target: " + targetPitch.ToString("N1"));
+//		Debug.Log("Rate: " + targetPitchRate.ToString("N1"));
+		return targetPitchRate;
 	}
 
-	protected float GetPitchRateFromHeading(Vector3 targetHeading)
+	protected float GetPitchRateFromHeading(Vector3 targetHeading, bool applyElevationConstraints = true)
 	{
+		if (applyElevationConstraints && biplaneTransform.position.y < behaviorProfile.ElevationMin || biplaneTransform.position.y > behaviorProfile.ElevationMax)
+		{
+			return GetPitchRateFromElevation((behaviorProfile.ElevationMax + behaviorProfile.ElevationMin) * 0.5f);
+		}
 		float targetPitch = -Mathf.Asin(targetHeading.normalized.y) * Mathf.Rad2Deg;
 		return GetAngleRateFromTargetAngle(targetPitch, controller.Pitch, controller.PitchRate);
 	}
@@ -89,6 +107,12 @@ public abstract class BiplaneBehavior : MonoBehaviour
 		return Vector3.Dot(currentHeading, targetHeading) > 0f;
 	}
 
+	protected bool AmInFront(BiplaneControl target)
+	{
+		Vector3 targetHeading = biplaneTransform.position - target.transform.position;
+		return Vector3.Dot(target.transform.forward, targetHeading) > 0f;
+	}
+
 	protected Vector3 GetAimPoint(BiplaneControl target)
 	{
 		return target.transform.position + target.Controller.Rb.velocity * GetRange(target) / biplaneAI.ProjectileSpeed;
@@ -101,7 +125,14 @@ public abstract class BiplaneBehavior : MonoBehaviour
 
 	protected float GetRange(Vector3 targetPosition)
 	{
-		return (targetPosition - biplaneAI.transform.position).magnitude;
+		return (targetPosition - biplaneTransform.position).magnitude;
+	}
+
+	protected float GetHorizontalRange(Vector3 targetPosition)
+	{
+		Vector3 offset = targetPosition - biplaneTransform.position;
+		offset.y = 0f;
+		return offset.magnitude;
 	}
 
 	protected BiplaneBehaviorCode GetDefaultBehavior()

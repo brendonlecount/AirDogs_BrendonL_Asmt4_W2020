@@ -94,6 +94,7 @@ public class BiplaneController : MonoBehaviour
 	public float Roll { get; private set; }
 	public float Pitch { get; private set; }
 	public float Yaw { get; private set; }
+	public float Elevation { get; private set; }
 
 	public float Health { get; private set; }
 	public bool IsDead { get; private set; } = false;
@@ -139,6 +140,7 @@ public class BiplaneController : MonoBehaviour
 		}
 		Pitch = pitch;
 		Yaw = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up);
+		Elevation = transform.position.y;
 	}
 
 	private Vector3 GetTorque()

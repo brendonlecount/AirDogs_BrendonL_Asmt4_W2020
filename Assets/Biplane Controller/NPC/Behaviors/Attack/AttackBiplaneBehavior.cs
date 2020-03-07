@@ -7,8 +7,10 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 	[SerializeField] private float attackDistance;
 	[SerializeField] private float fireRange;
 	[SerializeField] private float fireAngle;
+	[SerializeField] private float chickenRange;
 
 	private BiplaneControl aggroTarget;
+	private bool isChickening = false;
 
 	public override BiplaneBehaviorCode GetBehaviorCode()
 	{
@@ -17,6 +19,7 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 
 	public override void EnterBehavior()
 	{
+		isChickening = false;
 		aggroTarget = TargetManager.GetTargetNearest(biplaneTransform.position, behaviorProfile.LoseAggroRadius, !biplaneAI.IsPlayerFaction);
 		if (aggroTarget == null)
 		{
@@ -41,19 +44,35 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 			{
 				if (IsInFront(aggroTarget))
 				{
-					Vector3 aimPoint = GetAimPoint(aggroTarget);
-					if (range < fireRange && GetFireAngle(aimPoint) < fireAngle)
+					if (range < chickenRange && AmInFront(aggroTarget))
 					{
-						SetFireWingGuns(true);
+						if (!isChickening)
+						{
+							// pull up (or down) to avoid ramming target headon
+							controller.YawRate = 0f;
+							float elevationError = biplaneTransform.position.y - 0.5f * (behaviorProfile.ElevationMax + behaviorProfile.ElevationMin);
+							controller.PitchRate = (elevationError > 0f ? 1f : -1f) * behaviorProfile.HandlingLimit * controller.PitchYawRateLimit;
+							isChickening = true;
+						}
+						return BiplaneBehaviorCode.Attack;
 					}
 					else
 					{
-						SetFireWingGuns(false);
+						isChickening = false;
+						Vector3 aimPoint = GetAimPoint(aggroTarget);
+						if (range < fireRange && GetFireAngle(aimPoint) < fireAngle)
+						{
+							SetFireWingGuns(true);
+						}
+						else
+						{
+							SetFireWingGuns(false);
+						}
+						controller.YawRate = GetYawRateFromHeading(aimPoint - biplaneTransform.position);
+						controller.PitchRate = GetPitchRateFromHeading(aimPoint - biplaneTransform.position);
+						controller.Thrust = GetFollowThrust(aggroTarget, attackDistance);
+						return BiplaneBehaviorCode.Attack;
 					}
-					controller.YawRate = GetYawRateFromHeading(aimPoint - biplaneTransform.position);
-					controller.PitchRate = Mathf.Min(GetPitchRateFromHeading(aimPoint - biplaneTransform.position), GetPitchRateFromElevation(aggroTarget.transform.position.y));
-					controller.Thrust = GetFollowThrust(aggroTarget, attackDistance);
-					return BiplaneBehaviorCode.Attack;
 				}
 				else
 				{
@@ -69,5 +88,6 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 
 	public override void ExitBehavior()
 	{
+		SetFireWingGuns(false);
 	}
 }

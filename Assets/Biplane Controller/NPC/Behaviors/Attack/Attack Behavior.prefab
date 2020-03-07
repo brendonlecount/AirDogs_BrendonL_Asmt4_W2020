@@ -46,3 +46,4 @@ MonoBehaviour:
   attackDistance: 75
   fireRange: 300
   fireAngle: 15
+  chickenRange: 100

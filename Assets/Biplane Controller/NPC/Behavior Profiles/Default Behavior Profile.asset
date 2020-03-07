@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Default Behavior Profile
   m_EditorClassIdentifier: 
   skillRating: 1
+  elevationMin: 50
+  elevationMax: 300
   aggroRadius: 500
   loseAggroRadius: 750
   handlingLimit: 0.542

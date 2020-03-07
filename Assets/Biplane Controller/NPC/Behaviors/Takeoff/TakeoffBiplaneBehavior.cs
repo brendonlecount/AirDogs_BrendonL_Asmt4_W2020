@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TakeoffBiplaneBehavior : BiplaneBehavior
 {
-	[SerializeField] private float targetElevation;
 	[SerializeField] private float takeOffAngle;
 
 	public override BiplaneBehaviorCode GetBehaviorCode()
@@ -22,7 +21,7 @@ public class TakeoffBiplaneBehavior : BiplaneBehavior
 
 	public override BiplaneBehaviorCode ExecuteBehavior()
 	{
-		if (controller.transform.position.y > targetElevation)
+		if (controller.transform.position.y > behaviorProfile.ElevationMin)
 		{
 			return GetDefaultBehavior();
 		}

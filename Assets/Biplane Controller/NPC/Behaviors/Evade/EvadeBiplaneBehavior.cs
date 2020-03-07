@@ -8,10 +8,6 @@ public class EvadeBiplaneBehavior : BiplaneBehavior
 	[SerializeField] private float evadeTimeMax;
 	private float RandomEvadeTime => Random.Range(evadeTimeMin, evadeTimeMax);
 
-	[SerializeField] private float elevationMin;
-	[SerializeField] private float elevationMax;
-	private float RandomElevation => Random.Range(elevationMin, elevationMax);
-
 	private float RandomRawRate => Random.Range(-behaviorProfile.HandlingLimit * controller.PitchYawRateLimit, behaviorProfile.HandlingLimit * controller.PitchYawRateLimit);
 
 	private float evadeElevation;
@@ -54,7 +50,7 @@ public class EvadeBiplaneBehavior : BiplaneBehavior
 	{
 		while (true)
 		{
-			evadeElevation = RandomElevation;
+			evadeElevation = behaviorProfile.ElevationRandom;
 			controller.YawRate = RandomRawRate;
 			yield return new WaitForSeconds(RandomEvadeTime);
 		}

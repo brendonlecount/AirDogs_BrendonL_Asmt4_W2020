@@ -50,4 +50,13 @@ public class BiplaneAI : BiplaneControl
 			wg.Firing = false;
 		}
 	}
+
+	public void SetAiTarget(GameObject aiTarget)
+	{
+		this.target = aiTarget;
+		foreach (BiplaneBehavior bb in behaviors.Values)
+		{
+			bb.SetAiTarget(aiTarget);
+		}
+	}
 }

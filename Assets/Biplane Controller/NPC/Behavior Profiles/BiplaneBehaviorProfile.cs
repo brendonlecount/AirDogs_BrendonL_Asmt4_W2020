@@ -9,6 +9,14 @@ public class BiplaneBehaviorProfile : ScriptableObject
 	[SerializeField] private int skillRating;
 	public int SkillRating => skillRating;
 
+	[SerializeField] private float elevationMin;
+	public float ElevationMin => elevationMin;
+
+	[SerializeField] private float elevationMax;
+	public float ElevationMax => elevationMax;
+	
+	public float ElevationRandom => Random.Range(elevationMin, elevationMax);
+
 	[SerializeField] private float aggroRadius;
 	public float AggroRadius => aggroRadius;
 
