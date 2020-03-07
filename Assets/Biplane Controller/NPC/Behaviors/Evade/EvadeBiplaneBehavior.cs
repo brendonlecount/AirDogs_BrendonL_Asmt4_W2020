@@ -17,6 +17,11 @@ public class EvadeBiplaneBehavior : BiplaneBehavior
 		return BiplaneBehaviorCode.Evade;
 	}
 
+	public override string GetBehaviorName()
+	{
+		return "Evading";
+	}
+
 	public override void EnterBehavior()
 	{
 		StartCoroutine(EvadeRoutine());

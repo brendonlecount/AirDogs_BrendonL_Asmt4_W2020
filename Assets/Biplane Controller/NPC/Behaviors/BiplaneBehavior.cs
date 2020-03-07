@@ -7,7 +7,7 @@ public enum BiplaneBehaviorCode { Takeoff, Follow, Patrol, Evade, Attack, Dead }
 public abstract class BiplaneBehavior : MonoBehaviour
 {
 	private const float MAX_CORRECTION_ANGLE = 10f;
-	private const float CORRECTION_ANGLE_PER_METER = 2f;
+	private const float CORRECTION_ANGLE_PER_METER = 0.25f;
 	private const float CORRECTION_ANGLE_RATE_PER_DEGREE = 0.2f;
 	private const float CORRECTION_ANGLE_RATE_DAMPING = 0.2f;
 	private const float FOLLOW_THRUST_PER_METER = 0.1f;
@@ -23,6 +23,7 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	protected BiplaneBehaviorProfile behaviorProfile;
 
 	public abstract BiplaneBehaviorCode GetBehaviorCode();
+	public abstract string GetBehaviorName();
 	public virtual void InitializeBehavior(BiplaneAI biplaneAI)
 	{
 		this.biplaneAI = biplaneAI;

@@ -11,6 +11,11 @@ public class TakeoffBiplaneBehavior : BiplaneBehavior
 		return BiplaneBehaviorCode.Takeoff;
 	}
 
+	public override string GetBehaviorName()
+	{
+		return "Taking Off";
+	}
+
 	public override void EnterBehavior()
 	{
 		Debug.Log(controller.name + " taking off!");

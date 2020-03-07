@@ -43,6 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bae420fc73d94d41bc3a5b499de940f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolRadius: 500
-  patrolElevationMin: 20
-  patrolElevationMax: 40
+  patrolRadius: 200
+  reachedRadius: 50

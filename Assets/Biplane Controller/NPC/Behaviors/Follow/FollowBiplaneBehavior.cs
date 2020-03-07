@@ -50,4 +50,9 @@ public class FollowBiplaneBehavior : BiplaneBehavior
 	{
 		return BiplaneBehaviorCode.Follow;
 	}
+
+	public override string GetBehaviorName()
+	{
+		return "Following";
+	}
 }

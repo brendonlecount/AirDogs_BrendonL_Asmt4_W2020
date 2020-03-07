@@ -7,11 +7,13 @@ public class Targeting : MonoBehaviour
 {
 	private class TargetIcon
 	{
+		private TargetInfo targetInfo;
 		private CanvasGroup targetGroup;
 		private CanvasGroup aimGroup;
 		private RectTransform targetTransform;
 		private RectTransform aimTransform;
 		private RectTransform parentTransform;
+		private BiplaneAI biplaneAI;
 		private BiplaneController controller;
 		private Transform target;
 		private Camera cam;
@@ -19,18 +21,21 @@ public class Targeting : MonoBehaviour
 		float maxRange;
 		float minAlpha;
 		bool hasAiming;
+		bool showBehavior;
 
-		public TargetIcon(GameObject targetIconPrefab, GameObject aimIconPrefab, BiplaneController controller, RectTransform iconParent, float maxAimRange, float maxTargetRange, float minIconAlpha)
+		public TargetIcon(GameObject targetIconPrefab, GameObject aimIconPrefab, BiplaneAI biplaneAI, RectTransform iconParent, float maxAimRange, float maxTargetRange, float minIconAlpha, bool showBehavior)
 		{
 			this.maxAimRange = maxAimRange;
 			maxRange = maxTargetRange;
 			minAlpha = minIconAlpha;
 			parentTransform = iconParent;
-			this.controller = controller;
+			this.biplaneAI = biplaneAI;
+			controller = biplaneAI.Controller;
 			target = controller.transform;
 			cam = Camera.main;
 
-			targetTransform = GameObject.Instantiate(targetIconPrefab, iconParent).GetComponent<RectTransform>();
+			targetInfo = GameObject.Instantiate(targetIconPrefab, iconParent).GetComponent<TargetInfo>();
+			targetTransform = targetInfo.GetComponent<RectTransform>();
 			targetGroup = targetTransform.GetComponent<CanvasGroup>();
 			targetTransform.gameObject.SetActive(false);
 
@@ -45,6 +50,10 @@ public class Targeting : MonoBehaviour
 			{
 				hasAiming = false;
 			}
+
+			this.showBehavior = showBehavior;
+			targetInfo.SetShowBehavior(showBehavior);
+			targetInfo.SetRating(biplaneAI.BehaviorProfile.SkillRating);
 		}
 
 		// https://answers.unity.com/questions/799616/unity-46-beta-19-how-to-convert-from-world-space-t.html
@@ -55,6 +64,10 @@ public class Targeting : MonoBehaviour
 				Vector2 canvasPosition;
 				if (GetCanvasPosition(target.position, out canvasPosition))
 				{
+					if (showBehavior)
+					{
+						targetInfo.SetBehavior(biplaneAI.CurrentBehaviorName);
+					}
 					targetTransform.localPosition = canvasPosition;
 					if (!targetTransform.gameObject.activeSelf)
 					{
@@ -122,6 +135,7 @@ public class Targeting : MonoBehaviour
 	[SerializeField] private float maxAimRange;
 	[SerializeField] private float targetDistanceMax;
 	[SerializeField] private float iconAlphaMin;
+	[SerializeField] private bool showBehavior;
 
 	private List<TargetIcon> targetIcons = new List<TargetIcon>();
 	
@@ -130,13 +144,18 @@ public class Targeting : MonoBehaviour
     {
         foreach(BiplaneControl bc in TargetManager.GetEnemyBiplanes())
 		{
-			targetIcons.Add(new TargetIcon(targetIconPrefab, aimIconPrefab, bc.Controller, targetIconParent, maxAimRange, targetDistanceMax, iconAlphaMin));
+			BiplaneAI bai = bc as BiplaneAI;
+			if (bai != null)
+			{
+				targetIcons.Add(new TargetIcon(targetIconPrefab, aimIconPrefab, bai, targetIconParent, maxAimRange, targetDistanceMax, iconAlphaMin, showBehavior));
+			}
 		}
 		foreach(BiplaneControl bc in TargetManager.GetFriendlyBiplanes())
 		{
-			if (bc != PlayerInput.Instance)
+			BiplaneAI bai = bc as BiplaneAI;
+			if (bai != null)
 			{
-				targetIcons.Add(new TargetIcon(friendlyIconPrefab, null, bc.Controller, targetIconParent, maxAimRange, targetDistanceMax, iconAlphaMin));
+				targetIcons.Add(new TargetIcon(friendlyIconPrefab, null, bai, targetIconParent, maxAimRange, targetDistanceMax, iconAlphaMin, showBehavior));
 			}
 		}
 	}

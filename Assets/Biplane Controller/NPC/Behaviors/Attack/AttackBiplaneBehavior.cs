@@ -17,6 +17,11 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 		return BiplaneBehaviorCode.Attack;
 	}
 
+	public override string GetBehaviorName()
+	{
+		return "Attacking";
+	}
+
 	public override void EnterBehavior()
 	{
 		isChickening = false;

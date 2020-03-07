@@ -16,11 +16,17 @@ public class BiplaneAI : BiplaneControl
 
 	private bool takingOff = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	public string CurrentBehaviorName => currentBehavior.GetBehaviorName();
+
+	private void Awake()
+	{
 		behaviors = behaviorProfile.GetBehaviors(this);
 		currentBehavior = behaviors[entryBehavior];
+	}
+
+	// Start is called before the first frame update
+	void Start()
+    {
 		currentBehavior.EnterBehavior();
     }
 

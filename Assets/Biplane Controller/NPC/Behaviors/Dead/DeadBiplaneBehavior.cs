@@ -23,4 +23,9 @@ public class DeadBiplaneBehavior : BiplaneBehavior
 	{
 		return BiplaneBehaviorCode.Dead;
 	}
+
+	public override string GetBehaviorName()
+	{
+		return "Dead";
+	}
 }

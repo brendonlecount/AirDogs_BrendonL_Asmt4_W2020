@@ -18,6 +18,11 @@ public class PatrolBiplaneBehavior : BiplaneBehavior
 		return BiplaneBehaviorCode.Patrol;
 	}
 
+	public override string GetBehaviorName()
+	{
+		return "Patroling";
+	}
+
 	public override void EnterBehavior()
 	{
 		SetPatrolOrigin();
