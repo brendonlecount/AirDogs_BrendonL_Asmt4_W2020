@@ -11,6 +11,7 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private ParticleSystem damageSmoke;
 	[SerializeField] private AudioSource propAudio;
 	[SerializeField] private Transform firstPersonNode;
+	[SerializeField] private SphereCollider[] gearColliders;
 	public Transform FirstPersonNode => firstPersonNode;
 	[Header("Prefabs")]
 	[SerializeField] private GameObject deathExplosionPrefab;
@@ -178,10 +179,17 @@ public class BiplaneController : MonoBehaviour
 
 	private Vector3 GetLiftAccel()
 	{
+		Vector3 lift = transform.up;
+		lift *= 1f / lift.y;
 		float liftLimit = AxialSpeed * AxialSpeed * liftCoefficient;
-		IsStalling = liftLimit < G;
-		float lift = Mathf.Min(G * neutralLift, liftLimit);
-		return Vector3.up * lift;
+		float liftMagnitude = lift.magnitude;
+		IsStalling = liftLimit < liftMagnitude;
+		if (IsStalling)
+		{
+			lift *= liftLimit / liftMagnitude;
+		}
+		lift *= G;
+		return lift;
 	}
 
 	private Vector3 GetDragForce()
@@ -215,6 +223,12 @@ public class BiplaneController : MonoBehaviour
 		StartCoroutine(ExplosionDelayRoutine());
 	}
 
+	public void GroundPlane()
+	{
+
+		rb.velocity = Vector3.zero;
+	}
+
 	private IEnumerator ExplosionDelayRoutine()
 	{
 		yield return new WaitForSeconds(explosionDelay);
@@ -222,4 +236,6 @@ public class BiplaneController : MonoBehaviour
 		Instantiate(deathExplosionPrefab, transform.position, Quaternion.identity);
 		Instantiate(explosionAudioPrefab, transform.position, Quaternion.identity);
 	}
+
+
 }

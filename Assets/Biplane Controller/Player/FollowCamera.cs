@@ -22,8 +22,8 @@ public class FollowCamera : MonoBehaviour
 	private bool physicsUpdated = false;
 	private float deltaTime;
 	private float transitionTimer = 0f;
-	private Vector3 transitionPosition;
-	private Quaternion transitionRotation;
+	private Vector3 followPosition;
+	private Quaternion followRotation;
 	private float followFOV;
 
 
@@ -66,22 +66,23 @@ public class FollowCamera : MonoBehaviour
 
 	private void LateFixedUpdate()
 	{
+		followPosition = Vector3.Lerp(followPosition, GetPositionTarget(), lerpFactor * deltaTime);
+		followRotation = Quaternion.Lerp(followRotation, GetRotationTarget(), lerpFactor * deltaTime);
+
 		if (isFirstPerson)
 		{
 			if (transitionTimer < transitionTime)
 			{
 				transitionTimer += deltaTime;
 				float t = GetEaseInOutT();
-				transform.position = Vector3.Lerp(transitionPosition, firstPersonNode.position, t);
-				transform.rotation = Quaternion.Lerp(transitionRotation, firstPersonNode.rotation, t);
+				transform.position = Vector3.Lerp(followPosition, firstPersonNode.position, t);
+				transform.rotation = Quaternion.Lerp(followRotation, firstPersonNode.rotation, t);
 				cam.fieldOfView = Mathf.Lerp(followFOV, firstPersonFOV, t);
 			}
 			else
 			{
 				transform.position = firstPersonNode.position;
 				transform.rotation = firstPersonNode.rotation;
-				transitionPosition = transform.position;
-				transitionRotation = transform.rotation;
 			}
 		}
 		else
@@ -90,14 +91,15 @@ public class FollowCamera : MonoBehaviour
 			{
 				transitionTimer += deltaTime;
 				float t = GetEaseInOutT();
-				transform.position = Vector3.Lerp(transitionPosition, GetPositionTarget(), t);
-				transform.rotation = Quaternion.Lerp(transitionRotation, GetRotationTarget(), t);
+				transform.position = Vector3.Lerp(firstPersonNode.position, GetPositionTarget(), t);
+				transform.rotation = Quaternion.Lerp(firstPersonNode.rotation, GetRotationTarget(), t);
 				cam.fieldOfView = Mathf.Lerp(firstPersonFOV, followFOV, t);
 			}
-			transform.position = Vector3.Lerp(transform.position, GetPositionTarget(), lerpFactor * deltaTime);
-			transform.rotation = Quaternion.Lerp(transform.rotation, GetRotationTarget(), lerpFactor * deltaTime);
-			transitionPosition = transform.position;
-			transitionRotation = transform.rotation;
+			else
+			{
+				transform.position = followPosition;
+				transform.rotation = followRotation;
+			}
 		}
 	}
 
@@ -117,7 +119,7 @@ public class FollowCamera : MonoBehaviour
 
 	private Quaternion GetRotationTarget()
 	{
-		return Quaternion.LookRotation(target.position - transform.position, Vector3.up) * lookAheadRotation;
+		return Quaternion.LookRotation(target.position - followPosition, Vector3.up) * lookAheadRotation;
 	}
 
 	private float GetEaseInOutT()
