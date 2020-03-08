@@ -22,6 +22,12 @@ public class BiplaneBehaviorProfile : ScriptableObject
 
 	[SerializeField] private float loseAggroRadius;
 	public float LoseAggroRadius => loseAggroRadius;
+
+	[SerializeField] private float evadeRadius;
+	public float EvadeRadius => evadeRadius;
+
+	[SerializeField] private float stopEvadeRadius;
+	public float StopEvadeRadius => stopEvadeRadius;
 	
 	[Range(0f, 1f)]
 	[SerializeField] private float handlingLimit;

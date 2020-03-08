@@ -9,7 +9,7 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	private const float MAX_CORRECTION_ANGLE = 10f;
 	private const float CORRECTION_ANGLE_PER_METER = 0.25f;
 	private const float CORRECTION_ANGLE_RATE_PER_DEGREE = 0.2f;
-	private const float CORRECTION_ANGLE_RATE_DAMPING = 0.2f;
+	private const float CORRECTION_ANGLE_RATE_DAMPING = 0.4f;
 	private const float FOLLOW_THRUST_PER_METER = 0.1f;
 	private const float FOLLOW_THRUST_PER_MS = 0.01f;
 	
@@ -167,5 +167,40 @@ public abstract class BiplaneBehavior : MonoBehaviour
 		float distanceError = GetRange(target) - followDistance;
 		float followThrust = distanceError * FOLLOW_THRUST_PER_METER - speedError * FOLLOW_THRUST_PER_MS;
 		return Mathf.Clamp(followThrust, behaviorProfile.ThrustMin * controller.ThrustMax, behaviorProfile.ThrustMax * controller.ThrustMax);
+	}
+
+	protected bool IsShotBlocked(Vector3 targetPoint, BiplaneControl target)
+	{
+		RaycastHit hit;
+		Vector3 targetHeading = targetPoint - controller.LineOfSightNode.position;
+		if (Physics.SphereCast(controller.LineOfSightNode.position, controller.LineOfSightRadius, controller.LineOfSightNode.forward, out hit, targetHeading.magnitude, LayerMaskManager.BlocksProjectileMask))
+		{
+			if (hit.collider.CompareTag("Target"))
+			{
+				TargetTrigger tt = hit.collider.GetComponent<TargetTrigger>();
+				if (tt != null)
+				{
+					if (tt.Controller == controller)
+					{
+						Debug.Log("Not working. Move LOS node forward :/");
+						return true;
+					}
+					return tt.Controller != target.Controller;
+				}
+				else
+				{
+					Debug.Log("Target Trigger " + hit.collider.name + " missing ");
+					return true;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

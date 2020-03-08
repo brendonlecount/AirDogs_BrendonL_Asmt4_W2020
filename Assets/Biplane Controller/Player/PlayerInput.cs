@@ -8,6 +8,7 @@ public class PlayerInput : BiplaneControl
 	[SerializeField] private float thrustSensitivity;
 	[SerializeField] private float mouseSensitivity;
 	[SerializeField] private bool invertMouse;
+	[SerializeField] private bool groundAtStart;
 
 	private static PlayerInput instance;
 	public static PlayerInput Instance => instance;
@@ -19,8 +20,16 @@ public class PlayerInput : BiplaneControl
 		Cursor.visible = true;
     }
 
-    // Update is called once per frame
-    void Update()
+	private void Start()
+	{
+		if (groundAtStart)
+		{
+			Controller.GroundPlane();
+		}
+	}
+
+	// Update is called once per frame
+	void Update()
     {
 		FireWingGuns();
 		SetYawRate();

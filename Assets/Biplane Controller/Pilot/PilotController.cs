@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PilotController : MonoBehaviour
 {
+	[SerializeField] private Animator animator;
 	[SerializeField] private float parachuteDrag;
 	[SerializeField] private GameObject parachute;
 
@@ -19,7 +20,7 @@ public class PilotController : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
     {
 		if (ejected)
 		{
@@ -39,6 +40,7 @@ public class PilotController : MonoBehaviour
 		transform.parent = null;
 		this.velocity = velocity;
 		parachute.SetActive(true);
+		animator.SetTrigger("StartParachuting");
 		ejected = true;
 	}
 }

@@ -13,6 +13,10 @@ public class FollowBiplaneBehavior : BiplaneBehavior
 
 	public override BiplaneBehaviorCode ExecuteBehavior()
 	{
+		if (controller.IsDead)
+		{
+			return BiplaneBehaviorCode.Dead;
+		}
 		if (aiTargetControl == null || aiTargetControl.Controller.IsDead)
 		{
 			return BiplaneBehaviorCode.Patrol;
@@ -22,7 +26,7 @@ public class FollowBiplaneBehavior : BiplaneBehavior
 			BiplaneControl aggroTarget = TargetManager.GetTargetNearest(biplaneTransform.position, behaviorProfile.AggroRadius, !biplaneAI.IsPlayerFaction);
 			if (aggroTarget != null && !aggroTarget.Controller.IsDead)
 			{
-				if (IsInFront(aggroTarget))
+				if (IsInFront(aggroTarget) || GetRange(aggroTarget) > behaviorProfile.EvadeRadius)
 				{
 					return BiplaneBehaviorCode.Attack;
 				}

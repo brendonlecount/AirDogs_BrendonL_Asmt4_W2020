@@ -20,6 +20,7 @@ MonoBehaviour:
   thrustSensitivity: 0.125
   mouseSensitivity: 0.3
   invertMouse: 1
+  groundAtStart: 1
 --- !u!1001 &3147530400146785536
 PrefabInstance:
   m_ObjectHideFlags: 0

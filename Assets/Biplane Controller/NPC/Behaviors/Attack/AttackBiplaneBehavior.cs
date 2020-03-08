@@ -38,6 +38,10 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 
 	public override BiplaneBehaviorCode ExecuteBehavior()
 	{
+		if (controller.IsDead)
+		{
+			return BiplaneBehaviorCode.Dead;
+		}
 		if (aggroTarget != null && !aggroTarget.Controller.IsDead)
 		{
 			float range = GetRange(aggroTarget);
@@ -47,7 +51,7 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 			}
 			else
 			{
-				if (IsInFront(aggroTarget))
+				if (IsInFront(aggroTarget) || range > behaviorProfile.EvadeRadius)
 				{
 					if (range < chickenRange && AmInFront(aggroTarget))
 					{
@@ -65,7 +69,7 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 					{
 						isChickening = false;
 						Vector3 aimPoint = GetAimPoint(aggroTarget);
-						if (range < fireRange && GetFireAngle(aimPoint) < fireAngle)
+						if (range < fireRange && GetFireAngle(aimPoint) < fireAngle && !IsShotBlocked(aimPoint, aggroTarget))
 						{
 							SetFireWingGuns(true);
 						}

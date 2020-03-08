@@ -18,6 +18,7 @@ public class TakeoffBiplaneBehavior : BiplaneBehavior
 
 	public override void EnterBehavior()
 	{
+		controller.GroundPlane();
 		Debug.Log(controller.name + " taking off!");
 		controller.Thrust = controller.ThrustMax;
 		controller.YawRate = 0f;
@@ -26,6 +27,10 @@ public class TakeoffBiplaneBehavior : BiplaneBehavior
 
 	public override BiplaneBehaviorCode ExecuteBehavior()
 	{
+		if (controller.IsDead)
+		{
+			return BiplaneBehaviorCode.Dead;
+		}
 		if (controller.transform.position.y > behaviorProfile.ElevationMin)
 		{
 			return GetDefaultBehavior();

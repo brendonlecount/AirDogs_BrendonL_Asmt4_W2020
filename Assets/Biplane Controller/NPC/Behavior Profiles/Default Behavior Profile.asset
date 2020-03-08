@@ -17,6 +17,8 @@ MonoBehaviour:
   elevationMax: 300
   aggroRadius: 500
   loseAggroRadius: 750
+  evadeRadius: 150
+  stopEvadeRadius: 200
   handlingLimit: 0.542
   thrustMin: 0.505
   thrustMax: 0.751

@@ -49,3 +49,6 @@ MonoBehaviour:
   blocksCameraMask:
     serializedVersion: 2
     m_Bits: 17
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1

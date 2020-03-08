@@ -11,11 +11,15 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private ParticleSystem damageSmoke;
 	[SerializeField] private AudioSource propAudio;
 	[SerializeField] private Transform firstPersonNode;
-	[SerializeField] private SphereCollider[] gearColliders;
 	public Transform FirstPersonNode => firstPersonNode;
+	[SerializeField] private Transform lineOfSightNode;
+	public Transform LineOfSightNode => lineOfSightNode;
+	[SerializeField] private SphereCollider[] gearColliders;
+
 	[Header("Prefabs")]
 	[SerializeField] private GameObject deathExplosionPrefab;
 	[SerializeField] private GameObject explosionAudioPrefab;
+
 	[Header("Parameters")]
 	[SerializeField] private float torqueFactor;
 	[SerializeField] private float rightingTorqueFactor;
@@ -23,6 +27,7 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private float thrustMax;
 	public float ThrustMax => thrustMax;
 	[SerializeField] private float healthMax;
+	public float HealthMax => healthMax;
 	[SerializeField] private float liftCoefficient;
 	[SerializeField] private float turnTrackingCoeff;
 	[SerializeField] private float dragCoeff;
@@ -36,7 +41,10 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private float pitchLimitFactor;
 	[SerializeField] private float pitchYawRateLimit;
 	public float PitchYawRateLimit => pitchYawRateLimit;
+	[SerializeField] private float lineOfSightRadius;
+	public float LineOfSightRadius => lineOfSightRadius;
 	[SerializeField] private float explosionDelay;
+
 	[Header("Sound")]
 	[Range(0f, 1f)]
 	[SerializeField] private float propVolumeMin;
@@ -104,6 +112,9 @@ public class BiplaneController : MonoBehaviour
 	private float maxSmoke;
 	private ParticleSystem.EmissionModule smokeEmission;
 
+	public delegate void DeathDelegate(PilotController pilot);
+	public event DeathDelegate onDeath;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -114,8 +125,14 @@ public class BiplaneController : MonoBehaviour
 		smokeEmission.rateOverTimeMultiplier = 0f;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		Gizmos.DrawWireSphere(LineOfSightNode.position, LineOfSightRadius);
+	}
+
+	// Update is called once per frame
+	void FixedUpdate()
     {
 		SetPhysicsProperties();
 		Vector3 accel = GetThrustAccel() + GetLiftAccel() + Vector3.ClampMagnitude(GetTurnAccel() + GetDriftCounterAccel(), AxialSpeed * AxialSpeed * turnTrackingCoeff);
@@ -220,13 +237,30 @@ public class BiplaneController : MonoBehaviour
 		IsDead = true;
 		Debug.Log(name + " died!");
 		pilot.Eject(rb.velocity);
+		onDeath?.Invoke(pilot);
 		StartCoroutine(ExplosionDelayRoutine());
 	}
 
 	public void GroundPlane()
 	{
+		Debug.Log("Grounding plane " + name);
+		Vector3 eulers = transform.rotation.eulerAngles;
+		eulers.x = 0f;
+		eulers.z = 0f;
+		transform.rotation = Quaternion.Euler(eulers);
+		Vector3 gearOffset = 0.5f * (gearColliders[1].transform.position + gearColliders[2].transform.position) - gearColliders[0].transform.position;
+		Quaternion groundedRotation = Quaternion.FromToRotation(gearOffset, transform.forward);
+		Debug.Log(groundedRotation.eulerAngles);
+		transform.rotation = groundedRotation * transform.rotation;
+
+		RaycastHit hit;
+		if (Physics.SphereCast(gearColliders[0].transform.position + Vector3.up, gearColliders[0].radius, Vector3.down, out hit, Mathf.Infinity, LayerMaskManager.GroundMask))
+		{
+			transform.position -= Vector3.down * (hit.distance - 1.02f);
+		}
 
 		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
 	}
 
 	private IEnumerator ExplosionDelayRoutine()

@@ -30,12 +30,16 @@ public class EvadeBiplaneBehavior : BiplaneBehavior
 
 	public override BiplaneBehaviorCode ExecuteBehavior()
 	{
+		if (controller.IsDead)
+		{
+			return BiplaneBehaviorCode.Dead;
+		}
 		BiplaneControl aggroTarget = TargetManager.GetTargetNearest(biplaneTransform.position, behaviorProfile.LoseAggroRadius, !biplaneAI.IsPlayerFaction);
 		if (aggroTarget == null || aggroTarget.Controller.IsDead)
 		{
 			return GetDefaultBehavior();
 		}
-		else if (IsInFront(aggroTarget))
+		else if (IsInFront(aggroTarget) || GetRange(aggroTarget) > behaviorProfile.StopEvadeRadius)
 		{
 			return BiplaneBehaviorCode.Attack;
 		}

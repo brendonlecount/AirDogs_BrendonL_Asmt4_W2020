@@ -12,6 +12,9 @@ public class LayerMaskManager : MonoBehaviour
 	[SerializeField] private LayerMask blocksCameraMask;
 	public static LayerMask BlocksCameraMask => instance.blocksCameraMask;
 
+	[SerializeField] private LayerMask groundMask;
+	public static LayerMask GroundMask => instance.groundMask;
+
 	private static LayerMaskManager instance = null;
 
 	private void Awake()

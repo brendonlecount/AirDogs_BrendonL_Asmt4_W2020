@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4791968162867134223}
   - component: {fileID: 1540029019852634494}
   - component: {fileID: 3582560314198186977}
+  - component: {fileID: 224923218464510404}
   m_Layer: 0
   m_Name: Cloud Wisps
   m_TagString: Untagged
@@ -665,7 +666,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 400}
+    m_Position: {x: 0, y: 0, z: 800}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 400, y: 400, z: 100}
     placementMode: 0
@@ -3554,7 +3555,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 3
     type: 1
     collisionMode: 0
@@ -4754,3 +4755,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &224923218464510404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276732407968887548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef8a74110a66df4481c4d48ca162364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wispSystem: {fileID: 1540029019852634494}
+  minWispElevation: 50
+  maxWispElevation: 200
