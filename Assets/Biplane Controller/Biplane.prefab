@@ -2620,6 +2620,8 @@ MonoBehaviour:
   deathExplosionPrefab: {fileID: 100006, guid: f1983b3983ccfe44287e447b3290ec76, type: 3}
   explosionAudioPrefab: {fileID: 1848272309219742988, guid: e419f50bb41c9584f8ba560a45931340,
     type: 3}
+  predictiveCollisionPrefab: {fileID: 3265052848986082792, guid: 53714f411f4d9a7459c3c6fbfc0e85ce,
+    type: 3}
   torqueFactor: 1
   rightingTorqueFactor: 0.08
   rightingTorqueDamping: 4
@@ -2640,6 +2642,7 @@ MonoBehaviour:
   pitchYawRateLimit: 2
   lineOfSightRadius: 4
   explosionDelay: 2
+  predictiveCollisionTime: 1.5
   propVolumeMin: 0.254
   propVolumeMax: 0.74
   propPitchMin: 1

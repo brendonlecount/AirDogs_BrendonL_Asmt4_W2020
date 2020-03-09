@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Default Behavior Profile
   m_EditorClassIdentifier: 
   skillRating: 1
+  collisionCourseCheckTime: 1.5
   elevationMin: 50
   elevationMax: 300
   aggroRadius: 500

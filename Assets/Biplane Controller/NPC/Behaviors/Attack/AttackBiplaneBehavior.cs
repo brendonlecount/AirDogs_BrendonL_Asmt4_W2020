@@ -69,18 +69,26 @@ public class AttackBiplaneBehavior : BiplaneBehavior
 					{
 						isChickening = false;
 						Vector3 aimPoint = GetAimPoint(aggroTarget);
-						if (range < fireRange && GetFireAngle(aimPoint) < fireAngle && !IsShotBlocked(aimPoint, aggroTarget))
+						if (!IsOnCollisionCourse(aggroTarget))
 						{
-							SetFireWingGuns(true);
+							if (range < fireRange && GetFireAngle(aimPoint) < fireAngle && !IsShotBlocked(aimPoint, aggroTarget))
+							{
+								SetFireWingGuns(true);
+							}
+							else
+							{
+								SetFireWingGuns(false);
+							}
+							controller.YawRate = GetYawRateFromHeading(aimPoint - biplaneTransform.position);
+							controller.PitchRate = GetPitchRateFromHeading(aimPoint - biplaneTransform.position);
+							controller.Thrust = GetFollowThrust(aggroTarget, attackDistance);
+							return BiplaneBehaviorCode.Attack;
 						}
 						else
 						{
-							SetFireWingGuns(false);
+							controller.PitchRate = -behaviorProfile.HandlingLimit * controller.PitchYawRateLimit;
+							return BiplaneBehaviorCode.Attack;
 						}
-						controller.YawRate = GetYawRateFromHeading(aimPoint - biplaneTransform.position);
-						controller.PitchRate = GetPitchRateFromHeading(aimPoint - biplaneTransform.position);
-						controller.Thrust = GetFollowThrust(aggroTarget, attackDistance);
-						return BiplaneBehaviorCode.Attack;
 					}
 				}
 				else

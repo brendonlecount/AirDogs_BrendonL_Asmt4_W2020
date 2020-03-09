@@ -23,6 +23,7 @@ public class BiplaneController : MonoBehaviour
 	[Header("Prefabs")]
 	[SerializeField] private GameObject deathExplosionPrefab;
 	[SerializeField] private GameObject explosionAudioPrefab;
+	[SerializeField] private GameObject predictiveCollisionPrefab;
 
 	[Header("Parameters")]
 	[SerializeField] private float torqueFactor;
@@ -50,6 +51,8 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private float lineOfSightRadius;
 	public float LineOfSightRadius => lineOfSightRadius;
 	[SerializeField] private float explosionDelay;
+	[SerializeField] private float predictiveCollisionTime;
+	public float PredictiveCollisionTime => predictiveCollisionTime;
 
 	[Header("Sound")]
 	[Range(0f, 1f)]
@@ -123,6 +126,12 @@ public class BiplaneController : MonoBehaviour
 
 	private bool wasGrounded = false;
 	private Vector3 lastVelocity = Vector3.zero;
+	private Transform predictiveCollision;
+	private CapsuleCollider predictiveCollisionCol;
+	private Vector3 predictiveCollisionScale;
+
+	public CapsuleCollider PredictiveCollisionCol => predictiveCollisionCol;
+
 
 	private void Awake()
 	{
@@ -131,6 +140,10 @@ public class BiplaneController : MonoBehaviour
 		smokeEmission = damageSmoke.emission;
 		maxSmoke = smokeEmission.rateOverTimeMultiplier;
 		smokeEmission.rateOverTimeMultiplier = 0f;
+		predictiveCollision = Instantiate(predictiveCollisionPrefab).transform;
+		predictiveCollisionCol = predictiveCollision.GetComponent<CapsuleCollider>();
+		PredictiveCollisionCol.height = lineOfSightRadius * 2f;
+		PredictiveCollisionCol.radius = lineOfSightRadius;
 	}
 
 	private void OnDrawGizmos()
@@ -151,12 +164,20 @@ public class BiplaneController : MonoBehaviour
 			wasGrounded = false;
 		}
 		SetPhysicsProperties();
+		UpdatePredictiveCollision();
 		CheckForCrash();
 		rb.AddForceAtPosition(GetThrustAccel(), centerOfThrustNode.position, ForceMode.Acceleration);
 		rb.AddForceAtPosition(GetLiftAccel(), centerOfLiftNode.position, ForceMode.Acceleration);
 		rb.AddForceAtPosition(Vector3.ClampMagnitude(GetTurnAccel() + GetDriftCounterAccel(), AxialSpeed * AxialSpeed * turnTrackingCoeff), centerOfGravityNode.position, ForceMode.Acceleration);
 		rb.AddForceAtPosition(GetDragForce(), centerOfDragNode.position, ForceMode.Force);
 		rb.AddTorque(GetTorque(), ForceMode.Acceleration);
+	}
+
+	private void UpdatePredictiveCollision()
+	{
+		predictiveCollisionCol.height = Speed * predictiveCollisionTime + 2f * LineOfSightRadius;
+		predictiveCollision.position = transform.position + 0.5f * rb.velocity * predictiveCollisionTime;
+		predictiveCollision.rotation = Quaternion.LookRotation(rb.velocity);
 	}
 
 	private void SetPhysicsProperties()
@@ -286,7 +307,7 @@ public class BiplaneController : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.SphereCast(gearColliders[0].transform.position + Vector3.up, gearColliders[0].radius, Vector3.down, out hit, Mathf.Infinity, LayerMaskManager.GroundMask))
 		{
-			transform.position -= Vector3.down * (hit.distance - 1.02f);
+			transform.position -= Vector3.down * (hit.distance - 1f);
 		}
 
 		wasGrounded = true;

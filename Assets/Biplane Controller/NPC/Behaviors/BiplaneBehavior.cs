@@ -203,4 +203,29 @@ public abstract class BiplaneBehavior : MonoBehaviour
 			return false;
 		}
 	}
+
+	protected bool IsOnCollisionCourse(BiplaneControl target)
+	{
+		RaycastHit hit;
+		if (Physics.SphereCast(biplaneTransform.position, controller.LineOfSightRadius, controller.Rb.velocity, out hit, controller.Speed * controller.PredictiveCollisionTime, LayerMaskManager.PredictiveCollisionMask))
+		{
+			if (hit.collider == controller.PredictiveCollisionCol)
+			{
+				Debug.Log("This isn't going to work.");
+				return false;
+			}
+			if (hit.collider == target.Controller.PredictiveCollisionCol)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

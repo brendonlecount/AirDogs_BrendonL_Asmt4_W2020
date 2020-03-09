@@ -77,3 +77,7 @@ https://assetstore.unity.com/packages/vfx/shaders/nvjob-water-shader-simple-and-
 cloud PNG image image with transparent background
 pngimage.com
 http://pngimg.com/download/4312
+
+3D Scanned Dry Desert Sand 1 (textures)
+Textures.com
+https://www.textures.com/download/3dscans0014/126018?q=sand

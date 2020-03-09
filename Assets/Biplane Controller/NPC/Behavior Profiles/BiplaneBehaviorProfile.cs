@@ -9,6 +9,9 @@ public class BiplaneBehaviorProfile : ScriptableObject
 	[SerializeField] private int skillRating;
 	public int SkillRating => skillRating;
 
+	[SerializeField] private float collisionCourseCheckTime;
+	public float CollisionCourseCheckTime => collisionCourseCheckTime;
+
 	[SerializeField] private float elevationMin;
 	public float ElevationMin => elevationMin;
 
