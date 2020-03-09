@@ -61,3 +61,19 @@ https://pixabay.com/vectors/nautical-star-star-shadow-nautical-1144619/
 Cross Skull Danger Crossbones (sprite)
 Clker-Free-Vector-Images
 https://pixabay.com/vectors/cross-skull-danger-crossbones-296395/
+
+Backpack (model and textures)
+Iodep
+https://www.turbosquid.com/FullPreview/Index.cfm/ID/301945
+
+Free HDR Sky (skybox textures)
+ProAssets
+https://assetstore.unity.com/packages/2d/textures-materials/sky/free-hdr-sky-61217
+
+#NVJOB Water Shader - simple and fast (water shader, texture, material etc.)
+#NVJOB
+https://assetstore.unity.com/packages/vfx/shaders/nvjob-water-shader-simple-and-fast-149916
+
+cloud PNG image image with transparent background
+pngimage.com
+http://pngimg.com/download/4312

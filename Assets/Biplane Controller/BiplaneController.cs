@@ -15,6 +15,10 @@ public class BiplaneController : MonoBehaviour
 	[SerializeField] private Transform lineOfSightNode;
 	public Transform LineOfSightNode => lineOfSightNode;
 	[SerializeField] private SphereCollider[] gearColliders;
+	[SerializeField] private Transform centerOfGravityNode;
+	[SerializeField] private Transform centerOfLiftNode;
+	[SerializeField] private Transform centerOfDragNode;
+	[SerializeField] private Transform centerOfThrustNode;
 
 	[Header("Prefabs")]
 	[SerializeField] private GameObject deathExplosionPrefab;
@@ -28,6 +32,8 @@ public class BiplaneController : MonoBehaviour
 	public float ThrustMax => thrustMax;
 	[SerializeField] private float healthMax;
 	public float HealthMax => healthMax;
+	[SerializeField] private float damageVelocityMin;
+	[SerializeField] private float damageVelocityMax;
 	[SerializeField] private float liftCoefficient;
 	[SerializeField] private float turnTrackingCoeff;
 	[SerializeField] private float dragCoeff;
@@ -115,15 +121,17 @@ public class BiplaneController : MonoBehaviour
 	public delegate void DeathDelegate(PilotController pilot);
 	public event DeathDelegate onDeath;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	private bool wasGrounded = false;
+	private Vector3 lastVelocity = Vector3.zero;
+
+	private void Awake()
+	{
 		Health = healthMax;
-		rb.centerOfMass = Vector3.zero;
+		rb.centerOfMass = centerOfGravityNode.localPosition;
 		smokeEmission = damageSmoke.emission;
 		maxSmoke = smokeEmission.rateOverTimeMultiplier;
 		smokeEmission.rateOverTimeMultiplier = 0f;
-    }
+	}
 
 	private void OnDrawGizmos()
 	{
@@ -134,10 +142,20 @@ public class BiplaneController : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate()
     {
+		if (wasGrounded)
+		{
+			rb.velocity = Vector3.zero;
+			rb.angularVelocity = Vector3.zero;
+			PitchRate = 0f;
+			YawRate = 0f;
+			wasGrounded = false;
+		}
 		SetPhysicsProperties();
-		Vector3 accel = GetThrustAccel() + GetLiftAccel() + Vector3.ClampMagnitude(GetTurnAccel() + GetDriftCounterAccel(), AxialSpeed * AxialSpeed * turnTrackingCoeff);
-		Vector3 force = GetDragForce();
-		rb.AddForce(accel * rb.mass + force);
+		CheckForCrash();
+		rb.AddForceAtPosition(GetThrustAccel(), centerOfThrustNode.position, ForceMode.Acceleration);
+		rb.AddForceAtPosition(GetLiftAccel(), centerOfLiftNode.position, ForceMode.Acceleration);
+		rb.AddForceAtPosition(Vector3.ClampMagnitude(GetTurnAccel() + GetDriftCounterAccel(), AxialSpeed * AxialSpeed * turnTrackingCoeff), centerOfGravityNode.position, ForceMode.Acceleration);
+		rb.AddForceAtPosition(GetDragForce(), centerOfDragNode.position, ForceMode.Force);
 		rb.AddTorque(GetTorque(), ForceMode.Acceleration);
 	}
 
@@ -159,6 +177,18 @@ public class BiplaneController : MonoBehaviour
 		Pitch = pitch;
 		Yaw = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up);
 		Elevation = transform.position.y;
+	}
+
+	private void CheckForCrash()
+	{
+		Vector3 deltaVelocity = rb.velocity - lastVelocity;
+		lastVelocity = rb.velocity;
+		float velocityDelta = deltaVelocity.magnitude;
+		if (velocityDelta > damageVelocityMin)
+		{
+			Debug.Log(name + " crashed with delta " + velocityDelta);
+			TakeDamage(Mathf.Lerp(0f, healthMax, (velocityDelta - damageVelocityMin) / (damageVelocityMax - damageVelocityMin)));
+		}
 	}
 
 	private Vector3 GetTorque()
@@ -259,8 +289,7 @@ public class BiplaneController : MonoBehaviour
 			transform.position -= Vector3.down * (hit.distance - 1.02f);
 		}
 
-		rb.velocity = Vector3.zero;
-		rb.angularVelocity = Vector3.zero;
+		wasGrounded = true;
 	}
 
 	private IEnumerator ExplosionDelayRoutine()
