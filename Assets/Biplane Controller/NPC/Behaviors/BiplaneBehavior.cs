@@ -9,7 +9,7 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	private const float MAX_CORRECTION_ANGLE = 10f;
 	private const float CORRECTION_ANGLE_PER_METER = 0.25f;
 	private const float CORRECTION_ANGLE_RATE_PER_DEGREE = 0.2f;
-	private const float CORRECTION_ANGLE_RATE_DAMPING = 0.5f;
+	private const float CORRECTION_ANGLE_RATE_DAMPING = 0.01f;
 	private const float FOLLOW_THRUST_PER_METER = 0.1f;
 	private const float FOLLOW_THRUST_PER_MS = 0.01f;
 	

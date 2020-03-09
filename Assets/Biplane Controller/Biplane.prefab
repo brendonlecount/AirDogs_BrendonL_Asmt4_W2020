@@ -2634,7 +2634,7 @@ MonoBehaviour:
   neutralLift: 1
   rollFactor: 100
   maxRoll: 20
-  maxPitch: 70
+  maxPitch: 60
   minPitch: -45
   pitchLimitFactor: 0.5
   pitchYawRateLimit: 2
