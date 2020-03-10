@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.41908696, g: 0.38228402, b: 0.518, a: 1}
   m_FogMode: 2
-  m_FogDensity: 0.0002
+  m_FogDensity: 0.00007
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.42352942, g: 0.42352942, b: 0.6431373, a: 1}
@@ -599,7 +599,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &334312706
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -943,7 +943,7 @@ TerrainCollider:
   m_GameObject: {fileID: 522634543}
   m_Material: {fileID: 0}
   m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: d26d1f31f76b51e4d87f1e84b35a7e96, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 9591b1ddbb626c1489984895bd854c21, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &522634546
 Terrain:
@@ -2321,7 +2321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &2081945859
 BoxCollider:
   m_ObjectHideFlags: 0
