@@ -19,8 +19,10 @@ MonoBehaviour:
   isPlayerFaction: 1
   thrustSensitivity: 0.125
   mouseSensitivity: 0.3
+  mouseLookSensitivity: 5
   invertMouse: 1
   groundAtStart: 1
+  cameraSwitchHoldTime: 0.2
 --- !u!1001 &3147530400146785536
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,11 +7,15 @@ public class PlayerInput : BiplaneControl
 	[Header("Settings")]
 	[SerializeField] private float thrustSensitivity;
 	[SerializeField] private float mouseSensitivity;
+	[SerializeField] private float mouseLookSensitivity;
 	[SerializeField] private bool invertMouse;
 	[SerializeField] private bool groundAtStart;
+	[SerializeField] private float cameraSwitchHoldTime;
 
 	private static PlayerInput instance;
 	public static PlayerInput Instance => instance;
+
+	private Coroutine cameraSwitchHeldRoutine = null;
 
     private void Awake()
     {
@@ -31,11 +35,55 @@ public class PlayerInput : BiplaneControl
 	// Update is called once per frame
 	void Update()
     {
+		CheckCameraSwitch();
 		FireWingGuns();
-		SetYawRate();
-		SetPitchRate();
+		if (FollowCamera.CameraMode == CameraModes.First || FollowCamera.CameraMode == CameraModes.Follow)
+		{
+			SetYawRate();
+			SetPitchRate();
+		}
+		else
+		{
+			Controller.YawRate = 0f;
+			Controller.PitchRate = 0f;
+			SetCameraPitch();
+			SetCameraYaw();
+		}
 		SetThrust();
     }
+
+	private CameraModes lastCameraMode;
+
+	private void CheckCameraSwitch()
+	{
+		switch (FollowCamera.CameraMode)
+		{
+			case CameraModes.First:
+			case CameraModes.Follow:
+				if (Input.GetButtonDown("Fire2") && cameraSwitchHeldRoutine == null)
+				{
+					cameraSwitchHeldRoutine = StartCoroutine(CameraSwitchHeldRoutine());
+				}
+				else if (Input.GetButtonUp("Fire2") && cameraSwitchHeldRoutine != null)
+				{
+					FollowCamera.SetCameraMode(FollowCamera.CameraMode == CameraModes.Follow ? CameraModes.First : CameraModes.Follow);
+				}
+				else if (Input.GetButton("Fire2") && cameraSwitchHeldRoutine == null)
+				{
+					lastCameraMode = FollowCamera.CameraMode;
+					FollowCamera.SetCameraMode(CameraModes.Orbit);
+				}
+				break;
+			case CameraModes.Orbit:
+				if (!Input.GetButton("Fire2"))
+				{
+					FollowCamera.SetCameraMode(lastCameraMode);
+				}
+				break;
+			case CameraModes.Pilot:
+				break;
+		}
+	}
 
 	private void SetYawRate()
 	{
@@ -45,6 +93,16 @@ public class PlayerInput : BiplaneControl
 	private void SetPitchRate()
 	{
 		Controller.PitchRate = (invertMouse ? -1f : 1f) * Input.GetAxis("Mouse Y") * mouseSensitivity / Time.deltaTime;
+	}
+
+	private void SetCameraPitch()
+	{
+		FollowCamera.OrbitPitch -= Input.GetAxis("Mouse Y") * mouseLookSensitivity;
+	}
+
+	private void SetCameraYaw()
+	{
+		FollowCamera.OrbitYaw += Input.GetAxis("Mouse X") * mouseLookSensitivity;
 	}
 
 	private void SetThrust()
@@ -71,5 +129,11 @@ public class PlayerInput : BiplaneControl
 				wg.Firing = false;
 			}
 		}
+	}
+
+	private IEnumerator CameraSwitchHeldRoutine()
+	{
+		yield return new WaitForSeconds(cameraSwitchHoldTime);
+		cameraSwitchHeldRoutine = null;
 	}
 }

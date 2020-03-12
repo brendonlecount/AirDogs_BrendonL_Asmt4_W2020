@@ -2,8 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum CameraModes { First, Follow, Orbit, Pilot }
+
 public class FollowCamera : MonoBehaviour
 {
+	private class CameraTarget
+	{
+		public Vector3 position;
+		public Quaternion rotation;
+		public float fieldOfView;
+	}
+
 	[SerializeField] private Camera cam;
 	[SerializeField] private Vector3 cameraOffset;
 	[SerializeField] private float lookAheadAngle;
@@ -11,30 +21,65 @@ public class FollowCamera : MonoBehaviour
 	[SerializeField] private float collisionRadius;
 	[SerializeField] private float firstPersonFOV;
 	[SerializeField] private float transitionTime;
-	[SerializeField] private float mouseSensitivity;
+	[SerializeField] private CameraModes startingCameraMode;
+
+	private static FollowCamera instance = null;
 
 	private Transform target;
 	private Transform firstPersonNode;
 	private Quaternion lookAheadRotation;
 	private float offsetDistance;
 	private Vector3 offsetDirection;
-	private bool isFirstPerson = false;
-	private float lerpTimer;
 	private bool physicsUpdated = false;
 	private float deltaTime;
 	private float transitionTimer = 0f;
-	private Vector3 followPosition;
-	private Quaternion followRotation;
-	private float followFOV;
 	private Transform pilot = null;
-	private float currentFOV;
-	private float pilotPitch = 0f;
-	private float pilotYaw = 0f;
+	public static float OrbitPitch
+	{
+		get { return instance.orbitPitch; }
+		set
+		{
+			instance.orbitPitch = Mathf.Clamp(value, -90f, 90f);
+		}
+	}
+	private float orbitPitch = 0f;
+	public static float OrbitYaw = 0f;
+	private CameraModes cameraMode;
+	public static CameraModes CameraMode => instance.cameraMode;
+	private CameraModes lastCameraMode;
+	private Dictionary<CameraModes, CameraTarget> cameraTargets = new Dictionary<CameraModes, CameraTarget>();
 
+	public static bool Transitioning => instance.transitionTimer < instance.transitionTime;
+
+	public static void SetCameraMode(CameraModes cameraMode)
+	{
+		instance.lastCameraMode = instance.cameraMode;
+		instance.cameraMode = cameraMode;
+		instance.transitionTimer = 0f;
+	}
+
+	private void Awake()
+	{
+		instance = this;
+
+		cameraTargets.Add(CameraModes.First, new CameraTarget());
+		cameraTargets[CameraModes.First].fieldOfView = firstPersonFOV;
+
+		cameraTargets.Add(CameraModes.Follow, new CameraTarget());
+		cameraTargets[CameraModes.Follow].fieldOfView = cam.fieldOfView;
+
+		cameraTargets.Add(CameraModes.Orbit, new CameraTarget());
+		cameraTargets[CameraModes.Orbit].fieldOfView = cam.fieldOfView;
+
+		cameraTargets.Add(CameraModes.Pilot, new CameraTarget());
+		cameraTargets[CameraModes.Pilot].fieldOfView = cam.fieldOfView;
+
+		OrbitPitch = 0f;
+		OrbitYaw = 0f;
+	}
 
 	private void Start()
     {
-		followFOV = cam.fieldOfView;
 		transitionTimer = transitionTime;
 		target = PlayerInput.Instance.transform;
 		firstPersonNode = PlayerInput.Instance.Controller.FirstPersonNode;
@@ -43,23 +88,24 @@ public class FollowCamera : MonoBehaviour
 		offsetDirection = cameraOffset.normalized;
 		offsetDistance = cameraOffset.magnitude;
 
-		GetPositionAndRotationTarget(out followPosition, out followRotation);
-		transform.position = followPosition;
-		transform.rotation = followRotation;
-    }
+		GetFirstPositionAndRotationTarget(out cameraTargets[CameraModes.First].position, out cameraTargets[CameraModes.First].rotation);
+		GetFollowPositionAndRotationTarget(out cameraTargets[CameraModes.Follow].position, out cameraTargets[CameraModes.Follow].rotation);
+		GetOrbitPositionAndRotationTarget(out cameraTargets[CameraModes.Orbit].position, out cameraTargets[CameraModes.Orbit].rotation);
 
-	private void Update()
-	{
-		if (pilot != null)
+		if (startingCameraMode == CameraModes.Pilot)
 		{
-			pilotPitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-			pilotYaw += Input.GetAxis("Mouse X") * mouseSensitivity;
+			cameraMode = CameraModes.Orbit;
 		}
-		else if (Input.GetButtonDown("Fire2") && transitionTimer >= transitionTime)
+		else
 		{
-			isFirstPerson = !isFirstPerson;
-			transitionTimer = 0f;
+			cameraMode = startingCameraMode;
 		}
+
+		lastCameraMode = cameraMode;
+		transitionTimer = transitionTime * 2f;
+		transform.position = cameraTargets[cameraMode].position;
+		transform.rotation = cameraTargets[cameraMode].rotation;
+		cam.fieldOfView = cameraTargets[cameraMode].fieldOfView;
 	}
 
 	private void FixedUpdate()
@@ -79,65 +125,53 @@ public class FollowCamera : MonoBehaviour
 
 	private void LateFixedUpdate()
 	{
-		if (pilot != null)
+		UpdateCameraTargets();
+		if (Transitioning)
 		{
-			Vector3 pilotPositionTarget;
-			Quaternion pilotRotationTarget;
-			GetPilotPositionAndRotationTarget(out pilotPositionTarget, out pilotRotationTarget);
-			if (transitionTimer < transitionTime)
-			{
-				transitionTimer += deltaTime;
-				float t = GetEaseInOutT();
-				transform.position = Vector3.Lerp(followPosition, pilotPositionTarget, t);
-				transform.rotation = Quaternion.Lerp(followRotation, pilotRotationTarget, t);
-				cam.fieldOfView = Mathf.Lerp(currentFOV, followFOV, t);
-			}
-			else
-			{
-				transform.position = pilotPositionTarget;
-				transform.rotation = pilotRotationTarget;
-			}
-			return;
-		}
-
-		Vector3 followPositionTarget;
-		Quaternion followRotationTarget;
-		GetPositionAndRotationTarget(out followPositionTarget, out followRotationTarget);
-		followPosition = Vector3.Lerp(followPosition, followPositionTarget, lerpFactor * deltaTime);
-		followRotation = Quaternion.Lerp(followRotation, followRotationTarget, lerpFactor * deltaTime);
-
-		if (isFirstPerson)
-		{
-			if (transitionTimer < transitionTime)
-			{
-				transitionTimer += deltaTime;
-				float t = GetEaseInOutT();
-				transform.position = Vector3.Lerp(followPosition, firstPersonNode.position, t);
-				transform.rotation = Quaternion.Lerp(followRotation, firstPersonNode.rotation, t);
-				cam.fieldOfView = Mathf.Lerp(followFOV, firstPersonFOV, t);
-			}
-			else
-			{
-				transform.position = firstPersonNode.position;
-				transform.rotation = firstPersonNode.rotation;
-			}
+			ApplyCameraTransition();
 		}
 		else
 		{
-			if (transitionTimer < transitionTime)
-			{
-				transitionTimer += deltaTime;
-				float t = GetEaseInOutT();
-				transform.position = Vector3.Lerp(firstPersonNode.position, followPosition, t);
-				transform.rotation = Quaternion.Lerp(firstPersonNode.rotation, followRotation, t);
-				cam.fieldOfView = Mathf.Lerp(firstPersonFOV, followFOV, t);
-			}
-			else
-			{
-				transform.position = followPosition;
-				transform.rotation = followRotation;
-			}
+			ApplyCameraTarget();
 		}
+	}
+
+	private void UpdateCameraTargets()
+	{
+		Vector3 targetPosition;
+		Quaternion targetRotation;
+		
+		GetFirstPositionAndRotationTarget(out cameraTargets[CameraModes.First].position, out cameraTargets[CameraModes.First].rotation);
+
+		GetFollowPositionAndRotationTarget(out targetPosition, out targetRotation);
+		cameraTargets[CameraModes.Follow].position = Vector3.Lerp(cameraTargets[CameraModes.Follow].position, targetPosition, lerpFactor * deltaTime);
+		cameraTargets[CameraModes.Follow].rotation = Quaternion.Lerp(cameraTargets[CameraModes.Follow].rotation, targetRotation, lerpFactor * deltaTime);
+
+		GetOrbitPositionAndRotationTarget(out targetPosition, out targetRotation);
+		cameraTargets[CameraModes.Orbit].position = Vector3.Lerp(cameraTargets[CameraModes.Orbit].position, targetPosition, lerpFactor * deltaTime);
+		cameraTargets[CameraModes.Orbit].rotation = Quaternion.Lerp(cameraTargets[CameraModes.Orbit].rotation, targetRotation, lerpFactor * deltaTime);
+
+		if (pilot != null)
+		{
+			GetPilotPositionAndRotationTarget(out targetPosition, out targetRotation);
+			cameraTargets[CameraModes.Pilot].position = Vector3.Lerp(cameraTargets[CameraModes.Pilot].position, targetPosition, lerpFactor * deltaTime);
+			cameraTargets[CameraModes.Pilot].rotation = Quaternion.Lerp(cameraTargets[CameraModes.Pilot].rotation, targetRotation, lerpFactor * deltaTime);
+		}
+	}
+
+	private void ApplyCameraTransition()
+	{
+		transitionTimer += deltaTime;
+		float t = GetEaseInOutT();
+		transform.position = Vector3.Lerp(cameraTargets[lastCameraMode].position, cameraTargets[cameraMode].position, t);
+		transform.rotation = Quaternion.Lerp(cameraTargets[lastCameraMode].rotation, cameraTargets[cameraMode].rotation, t);
+		cam.fieldOfView = Mathf.Lerp(cameraTargets[lastCameraMode].fieldOfView, cameraTargets[cameraMode].fieldOfView, t);
+	}
+
+	private void ApplyCameraTarget()
+	{
+		transform.position = cameraTargets[cameraMode].position;
+		transform.rotation = cameraTargets[cameraMode].rotation;
 	}
 
 	private void GetPilotPositionAndRotationTarget(out Vector3 positionTarget, out Quaternion rotationTarget)
@@ -148,17 +182,33 @@ public class FollowCamera : MonoBehaviour
 		RaycastHit hit;
 		if (Physics.SphereCast(pilot.position, collisionRadius, targetRotation * offsetDirection, out hit, offsetDistance, LayerMaskManager.BlocksCameraMask, QueryTriggerInteraction.Ignore))
 		{
-			positionTarget = pilot.position + targetRotation * Quaternion.Euler(0f, pilotYaw, 0f) * Quaternion.Euler(pilotPitch, 0f, 0f) * offsetDirection * hit.distance;
+			positionTarget = pilot.position + targetRotation * Quaternion.Euler(0f, OrbitYaw, 0f) * Quaternion.Euler(OrbitPitch, 0f, 0f) * offsetDirection * hit.distance;
 		}
 		else
 		{
-			positionTarget = pilot.position + targetRotation * Quaternion.Euler(0f, pilotYaw, 0f) * Quaternion.Euler(pilotPitch, 0f, 0f) * cameraOffset;
+			positionTarget = pilot.position + targetRotation * Quaternion.Euler(0f, OrbitYaw, 0f) * Quaternion.Euler(OrbitPitch, 0f, 0f) * cameraOffset;
 		}
 		rotationTarget = Quaternion.LookRotation(pilot.position - positionTarget, Vector3.up);
-
 	}
 
-	private void GetPositionAndRotationTarget(out Vector3 positionTarget, out Quaternion rotationTarget)
+	private void GetOrbitPositionAndRotationTarget(out Vector3 positionTarget, out Quaternion rotationTarget)
+	{
+		Vector3 flatForward = target.forward;
+		flatForward.y = 0f;
+		Quaternion targetRotation = Quaternion.LookRotation(flatForward, Vector3.up);
+		RaycastHit hit;
+		if (Physics.SphereCast(target.position, collisionRadius, targetRotation * offsetDirection, out hit, offsetDistance, LayerMaskManager.BlocksCameraMask, QueryTriggerInteraction.Ignore))
+		{
+			positionTarget = target.position + targetRotation * Quaternion.Euler(0f, OrbitYaw, 0f) * Quaternion.Euler(OrbitPitch, 0f, 0f) * offsetDirection * hit.distance;
+		}
+		else
+		{
+			positionTarget = target.position + targetRotation * Quaternion.Euler(0f, OrbitYaw, 0f) * Quaternion.Euler(OrbitPitch, 0f, 0f) * cameraOffset;
+		}
+		rotationTarget = Quaternion.LookRotation(target.position - positionTarget, Vector3.up);
+	}
+
+	private void GetFollowPositionAndRotationTarget(out Vector3 positionTarget, out Quaternion rotationTarget)
 	{
 		Quaternion targetRotation = Quaternion.LookRotation(target.forward, Vector3.up);
 		RaycastHit hit;
@@ -171,6 +221,12 @@ public class FollowCamera : MonoBehaviour
 			positionTarget = target.position + targetRotation * cameraOffset;
 		}
 		rotationTarget = Quaternion.LookRotation(target.position - positionTarget, Vector3.up) * lookAheadRotation;
+	}
+
+	private void GetFirstPositionAndRotationTarget(out Vector3 positionTarget, out Quaternion rotationTarget)
+	{
+		positionTarget = firstPersonNode.position;
+		rotationTarget = firstPersonNode.rotation;
 	}
 
 	private float GetEaseInOutT()
@@ -190,7 +246,7 @@ public class FollowCamera : MonoBehaviour
 	private void DeathHandler(PilotController pilot)
 	{
 		this.pilot = pilot.transform;
-		transitionTimer = 0f;
-		currentFOV = cam.fieldOfView;
+		GetPilotPositionAndRotationTarget(out cameraTargets[CameraModes.Pilot].position, out cameraTargets[CameraModes.Pilot].rotation);
+		SetCameraMode(CameraModes.Pilot);
 	}
 }

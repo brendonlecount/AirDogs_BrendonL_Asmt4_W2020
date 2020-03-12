@@ -744,7 +744,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8647755042651442050
 Transform:
   m_ObjectHideFlags: 0
@@ -1437,7 +1437,7 @@ GameObject:
   - component: {fileID: 2706499481834441532}
   - component: {fileID: 1702103794484293208}
   m_Layer: 8
-  m_Name: Box004 (Target)
+  m_Name: H Stabilizer (Target)
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1703,7 +1703,7 @@ GameObject:
   - component: {fileID: 456490180289091994}
   - component: {fileID: 6846445367452111560}
   m_Layer: 8
-  m_Name: Cylinder001 (Target)
+  m_Name: Fuselage (Target)
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1890,7 +1890,7 @@ GameObject:
   - component: {fileID: 1923090314046138600}
   - component: {fileID: 7839838956512669295}
   m_Layer: 8
-  m_Name: Box011 (Target)
+  m_Name: Bottom Wing (Target)
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2236,7 +2236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1941967843802271956
 Transform:
   m_ObjectHideFlags: 0
@@ -2351,7 +2351,7 @@ GameObject:
   - component: {fileID: 1612211878038138128}
   - component: {fileID: 4969321508324909030}
   m_Layer: 8
-  m_Name: Box001 (Target)
+  m_Name: Top Wing (Target)
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2739,7 +2739,7 @@ GameObject:
   - component: {fileID: 6310279063978369029}
   - component: {fileID: 8485002843031003055}
   m_Layer: 8
-  m_Name: Box005 (Target)
+  m_Name: V Stabilizer (Target)
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2847,7 +2847,7 @@ GameObject:
   - component: {fileID: 8654926528104443793}
   - component: {fileID: 6457938890763071486}
   m_Layer: 8
-  m_Name: Box013 (Target)
+  m_Name: Windshield (Target)
   m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

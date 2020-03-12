@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42f6f6db5b20a4c43928ba0e616136be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 40
+  attackDistance: 25
   fireRange: 300
   fireAngle: 15
   chickenRange: 100

@@ -106,7 +106,7 @@ MonoBehaviour:
   collisionRadius: 0.6
   firstPersonFOV: 30
   transitionTime: 0.25
-  mouseSensitivity: 5
+  startingCameraMode: 1
 --- !u!114 &7646551913592699737
 MonoBehaviour:
   m_ObjectHideFlags: 0

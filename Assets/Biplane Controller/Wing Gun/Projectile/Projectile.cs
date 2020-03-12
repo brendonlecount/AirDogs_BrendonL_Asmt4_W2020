@@ -9,6 +9,8 @@ public class Projectile : MonoBehaviour
 	[SerializeField] private float drag;
 	[SerializeField] private float lifetime;
 	[SerializeField] private TrailRenderer trail;
+	[SerializeField] private bool useGravity;
+	[SerializeField] private bool useDrag;
 
 	public float Speed => speed;
 	public float Damage => damage;
@@ -55,7 +57,7 @@ public class Projectile : MonoBehaviour
 
 	private void CastMove()
 	{
-		velocity += Vector3.down * gravity * Time.deltaTime - velocity * lastSpeed * drag;
+		velocity += (useGravity ? Vector3.down * gravity * Time.deltaTime : Vector3.zero) - (useDrag ? velocity * lastSpeed * drag : Vector3.zero);
 		lastSpeed = velocity.magnitude;
 		RaycastHit hit;
 		if (Physics.Raycast(transform.position, velocity, out hit, lastSpeed * Time.deltaTime, LayerMaskManager.BlocksProjectileMask, QueryTriggerInteraction.Collide))
@@ -67,6 +69,7 @@ public class Projectile : MonoBehaviour
 				{
 					if (tt.Controller != null)
 					{
+						//Debug.Log(tt.name + " took damage.");
 						tt.Controller.TakeDamage(damage);
 					}
 					else

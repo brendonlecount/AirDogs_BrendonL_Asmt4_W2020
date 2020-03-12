@@ -44,11 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7861b349d8810fa4391cca4ea8fede9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 200
+  speed: 250
   damage: 10
   drag: 0
   lifetime: 1.5
   trail: {fileID: 6792543040797349142}
+  useGravity: 0
+  useDrag: 0
 --- !u!1 &5729342362254178529
 GameObject:
   m_ObjectHideFlags: 0
