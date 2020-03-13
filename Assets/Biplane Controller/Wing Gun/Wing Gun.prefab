@@ -143,7 +143,7 @@ MonoBehaviour:
   muzzleFlashEffect: {fileID: 252388843863748465}
   fireAudioSource: {fileID: 8324286156581138188}
   fireDelay: 0.1
-  spread: 0.025
+  spread: 0.03
   flashFadeRate: 30
 --- !u!82 &8324286156581138188
 AudioSource:

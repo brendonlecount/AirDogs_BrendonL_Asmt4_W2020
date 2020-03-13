@@ -7,6 +7,7 @@ public class PilotController : MonoBehaviour
 	[SerializeField] private Animator animator;
 	[SerializeField] private float parachuteDrag;
 	[SerializeField] private GameObject parachute;
+	[SerializeField] private float mouseLookSensitivity;
 
 	private const float G = 9.81f;
 
@@ -17,6 +18,12 @@ public class PilotController : MonoBehaviour
 	private void Start()
 	{
 		parachute.SetActive(false);
+	}
+
+	private void Update()
+	{
+		FollowCamera.OrbitPitch -= Input.GetAxis("Mouse Y") * mouseLookSensitivity;
+		FollowCamera.OrbitYaw += Input.GetAxis("Mouse X") * mouseLookSensitivity;
 	}
 
 	// Update is called once per frame

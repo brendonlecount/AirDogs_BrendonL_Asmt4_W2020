@@ -35,22 +35,31 @@ public class PlayerInput : BiplaneControl
 	// Update is called once per frame
 	void Update()
     {
-		CheckCameraSwitch();
-		FireWingGuns();
-		if (FollowCamera.CameraMode == CameraModes.First || FollowCamera.CameraMode == CameraModes.Follow)
-		{
-			SetYawRate();
-			SetPitchRate();
-		}
-		else
+		if (FollowCamera.CameraMode == CameraModes.Pilot)
 		{
 			Controller.YawRate = 0f;
 			Controller.PitchRate = 0f;
-			SetCameraPitch();
-			SetCameraYaw();
+			Controller.Thrust = 0f;
 		}
-		SetThrust();
-    }
+		else
+		{
+			CheckCameraSwitch();
+			FireWingGuns();
+			if (FollowCamera.CameraMode == CameraModes.Orbit)
+			{
+				Controller.YawRate = 0f;
+				Controller.PitchRate = 0f;
+				SetCameraPitch();
+				SetCameraYaw();
+			}
+			else
+			{
+				SetYawRate();
+				SetPitchRate();
+			}
+			SetThrust();
+		}
+	}
 
 	private CameraModes lastCameraMode;
 
