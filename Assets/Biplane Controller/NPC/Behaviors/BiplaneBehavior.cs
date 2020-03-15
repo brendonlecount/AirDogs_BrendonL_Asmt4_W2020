@@ -8,8 +8,8 @@ public abstract class BiplaneBehavior : MonoBehaviour
 {
 	private const float MAX_CORRECTION_ANGLE = 10f;
 	private const float CORRECTION_ANGLE_PER_METER = 0.25f;
-	private const float CORRECTION_ANGLE_RATE_PER_DEGREE = 0.65f;		
-	private const float CORRECTION_ANGLE_RATE_DAMPING = 1.7f;
+	private const float CORRECTION_ANGLE_RATE_PER_DEGREE = 0.1f;		
+	private const float CORRECTION_ANGLE_RATE_DAMPING = 0.6f;
 	private const float FOLLOW_THRUST_PER_METER = 0.01f;
 	private const float FOLLOW_THRUST_PER_MS = 0.1f;
 	
@@ -66,15 +66,18 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	{
 		if (applyElevationConstraints && biplaneTransform.position.y < behaviorProfile.ElevationMin || biplaneTransform.position.y > behaviorProfile.ElevationMax)
 		{
+//			Debug.Log("Limited Pitch Correction:");
 			return GetPitchRateFromElevation((behaviorProfile.ElevationMax + behaviorProfile.ElevationMin) * 0.5f);
 		}
 		float targetPitch = -Mathf.Asin(targetHeading.normalized.y) * Mathf.Rad2Deg;
+//		Debug.Log("Pitch Correction:");
 		return GetAngleRateFromTargetAngle(targetPitch, controller.Pitch, controller.PitchRate);
 	}
 
 	protected float GetYawRateFromHeading(Vector3 targetHeading)
 	{
 		float targetYaw = Vector3.SignedAngle(Vector3.forward, targetHeading, Vector3.up);
+//		Debug.Log("Yaw Correction:");
 		float yawRate = GetAngleRateFromTargetAngle(targetYaw, controller.Yaw, controller.YawRate);
 		return yawRate;
 	}
@@ -83,9 +86,17 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	{
 		targetAngle = ConditionAngle(targetAngle, currentAngle);
 		float angleError = currentAngle - targetAngle;
-		return Mathf.Clamp(-angleError * CORRECTION_ANGLE_RATE_PER_DEGREE - currentRate * CORRECTION_ANGLE_RATE_DAMPING,
+//		Debug.Log((angleError * CORRECTION_ANGLE_RATE_PER_DEGREE).ToString("N2") + "  |  " + (currentRate * CORRECTION_ANGLE_RATE_DAMPING).ToString("N2"));
+		float rate = Mathf.Clamp(-SRoot(angleError * CORRECTION_ANGLE_RATE_PER_DEGREE) - currentRate * CORRECTION_ANGLE_RATE_DAMPING,
 			-behaviorProfile.HandlingLimit * controller.PitchYawRateLimit,
 			behaviorProfile.HandlingLimit * controller.PitchYawRateLimit);
+//		Debug.Log(rate.ToString("N2"));
+		return rate;
+	}
+
+	private float SRoot(float value)
+	{
+		return Mathf.Sign(value) * Mathf.Sqrt(Mathf.Abs(value));
 	}
 
 	private float ConditionAngle(float angle, float referenceAngle)

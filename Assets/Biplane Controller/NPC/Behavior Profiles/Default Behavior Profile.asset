@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillRating: 1
   collisionCourseCheckTime: 1.5
-  elevationMin: 100
-  elevationMax: 500
+  elevationMin: 50
+  elevationMax: 1000
   aggroRadius: 500
   loseAggroRadius: 750
   evadeRadius: 150
