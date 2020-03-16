@@ -184,25 +184,16 @@ public abstract class BiplaneBehavior : MonoBehaviour
 	{
 		RaycastHit hit;
 		Vector3 targetHeading = targetPoint - controller.LineOfSightNode.position;
-		if (Physics.SphereCast(controller.LineOfSightNode.position, controller.LineOfSightRadius, controller.LineOfSightNode.forward, out hit, targetHeading.magnitude, LayerMaskManager.BlocksProjectileMask))
+		if (Physics.SphereCast(controller.LineOfSightNode.position, controller.LineOfSightRadius, controller.LineOfSightNode.forward, out hit, targetHeading.magnitude, LayerMaskManager.PredictiveCollisionMask))
 		{
-			if (hit.collider.CompareTag("Target"))
+			if (hit.collider == controller.PredictiveCollisionCol)
 			{
-				TargetTrigger tt = hit.collider.GetComponent<TargetTrigger>();
-				if (tt != null)
-				{
-					if (tt.Controller == controller)
-					{
-						Debug.Log("Not working. Move LOS node forward :/");
-						return true;
-					}
-					return tt.Controller != target.Controller;
-				}
-				else
-				{
-					Debug.Log("Target Trigger " + hit.collider.name + " missing ");
-					return true;
-				}
+				Debug.Log("This isn't going to work.");
+				return false;
+			}
+			if (hit.collider == target.Controller.PredictiveCollisionCol)
+			{
+				return false;
 			}
 			else
 			{

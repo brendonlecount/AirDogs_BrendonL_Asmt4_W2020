@@ -153,8 +153,6 @@ public class FollowCamera : MonoBehaviour
 
 		if (pilot != null)
 		{
-			Debug.Log("You died!");
-
 			GetPilotPositionAndRotationTarget(out targetPosition, out targetRotation);
 			cameraTargets[CameraModes.Pilot].position = Vector3.Lerp(cameraTargets[CameraModes.Pilot].position, targetPosition, lerpFactor * deltaTime);
 			cameraTargets[CameraModes.Pilot].rotation = Quaternion.Lerp(cameraTargets[CameraModes.Pilot].rotation, targetRotation, lerpFactor * deltaTime);

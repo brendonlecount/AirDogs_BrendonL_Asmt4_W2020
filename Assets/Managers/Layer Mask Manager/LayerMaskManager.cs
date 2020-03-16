@@ -18,6 +18,9 @@ public class LayerMaskManager : MonoBehaviour
 	[SerializeField] private LayerMask predictiveCollisionMask;
 	public static LayerMask PredictiveCollisionMask => instance.predictiveCollisionMask;
 
+	[SerializeField] private LayerMask targetTriggerMask;
+	public static LayerMask TargetTriggerMask => instance.targetTriggerMask;
+
 	private static LayerMaskManager instance = null;
 
 	private void Awake()

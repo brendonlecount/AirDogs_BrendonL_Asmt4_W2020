@@ -45,6 +45,7 @@ public class PlayerInput : BiplaneControl
 		{
 			CheckCameraSwitch();
 			FireWingGuns();
+			DropBomb();
 			if (FollowCamera.CameraMode == CameraModes.Orbit)
 			{
 				Controller.YawRate = 0f;
@@ -137,6 +138,14 @@ public class PlayerInput : BiplaneControl
 			{
 				wg.Firing = false;
 			}
+		}
+	}
+
+	private void DropBomb()
+	{
+		if (Input.GetButton("Bomb"))
+		{
+			BiplaneBomber.DropBomb();
 		}
 	}
 

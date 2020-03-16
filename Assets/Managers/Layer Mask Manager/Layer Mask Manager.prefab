@@ -55,3 +55,6 @@ MonoBehaviour:
   predictiveCollisionMask:
     serializedVersion: 2
     m_Bits: 2048
+  targetTriggerMask:
+    serializedVersion: 2
+    m_Bits: 256

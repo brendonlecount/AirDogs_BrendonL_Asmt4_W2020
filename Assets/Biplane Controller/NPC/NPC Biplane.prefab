@@ -16,6 +16,7 @@ MonoBehaviour:
   wingGuns:
   - {fileID: 4472086918552857461}
   - {fileID: 7481469913902894643}
+  biplaneBomber: {fileID: 198091936231564285}
   isPlayerFaction: 0
   entryBehavior: 0
   behaviorProfile: {fileID: 11400000, guid: 6c9f8bc12c5cb7248aa57dcebde0e6ac, type: 2}
@@ -129,5 +130,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be841be91f7a2ea44a871874c02a547b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &198091936231564285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 562890441073198121, guid: 0f61dac1e266ea644a082a0d4234bd67,
+    type: 3}
+  m_PrefabInstance: {fileID: 391824500663134164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653d09d5058e3a644831e413c713a8c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

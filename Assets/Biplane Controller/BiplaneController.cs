@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BiplaneController : MonoBehaviour
+public class BiplaneController : MonoBehaviour, IDamageable
 {
 	[Header("Components")]
 	[SerializeField] private Rigidbody rb;

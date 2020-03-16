@@ -67,10 +67,10 @@ public class Projectile : MonoBehaviour
 				TargetTrigger tt = hit.collider.GetComponent<TargetTrigger>();
 				if (tt != null)
 				{
-					if (tt.Controller != null)
+					if (tt.Damageable != null)
 					{
 						//Debug.Log(tt.name + " took damage.");
-						tt.Controller.TakeDamage(damage);
+						tt.Damageable.TakeDamage(damage);
 					}
 					else
 					{
