@@ -9,7 +9,6 @@ public class PlayerInput : BiplaneControl
 	[SerializeField] private float mouseSensitivity;
 	[SerializeField] private float mouseLookSensitivity;
 	[SerializeField] private bool invertMouse;
-	[SerializeField] private bool groundAtStart;
 	[SerializeField] private float cameraSwitchHoldTime;
 
 	private static PlayerInput instance;
@@ -26,10 +25,7 @@ public class PlayerInput : BiplaneControl
 
 	private void Start()
 	{
-		if (groundAtStart)
-		{
-			Controller.GroundPlane();
-		}
+		ApplyInitialConditions();
 	}
 
 	// Update is called once per frame

@@ -27,6 +27,7 @@ public class BiplaneAI : BiplaneControl
 	// Start is called before the first frame update
 	void Start()
     {
+		ApplyInitialConditions();
 		currentBehavior.EnterBehavior();
     }
 

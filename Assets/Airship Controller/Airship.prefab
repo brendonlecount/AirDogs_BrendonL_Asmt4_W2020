@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &107762433953758944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6257060981923298614}
+  m_Layer: 0
+  m_Name: Death Explosion Node (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6257060981923298614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107762433953758944}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.2, y: 27.88, z: 132.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573465802837002578}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7573465802819996369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +306,154 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &4843520899280815714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4189341325802040188}
+  - component: {fileID: 5325860081704850003}
+  - component: {fileID: 3698907437297987068}
+  m_Layer: 8
+  m_Name: Target Trigger
+  m_TagString: Target
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4189341325802040188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843520899280815714}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573465802837002578}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5325860081704850003
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843520899280815714}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 83.12, y: 84.1, z: 292.7}
+  m_Center: {x: 0, y: -3.15, z: 0}
+--- !u!114 &3698907437297987068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843520899280815714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca26affa14aee744db208f3be0db637a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageableObject: {fileID: 7573465802837002580}
+--- !u!1 &4950365624942648819
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1724962892570306084}
+  m_Layer: 0
+  m_Name: Death Explosion Node (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1724962892570306084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4950365624942648819}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.6, y: 23.82, z: -153.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573465802837002578}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5753952452620738153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 854663877560241992}
+  m_Layer: 0
+  m_Name: Death Explosion Node (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &854663877560241992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5753952452620738153}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 59.3, y: 34, z: -95.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573465802837002578}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5943976090558066687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6214322263334436945}
+  m_Layer: 0
+  m_Name: Death Explosion Node (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6214322263334436945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5943976090558066687}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.1, y: 41.2, z: -38.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573465802837002578}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &526504306264829208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +470,36 @@ MonoBehaviour:
   rotationRate: 1080
   spinUpTime: 0.5
   spinState: 2
+--- !u!1 &7286539100433283644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7258881202096553857}
+  m_Layer: 0
+  m_Name: Death Explosion Node
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7258881202096553857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7286539100433283644}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -61.8, y: 30, z: 76.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573465802837002578}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7573465802837002580
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +511,7 @@ GameObject:
   - component: {fileID: 7573465802837002578}
   - component: {fileID: 7573465802837002581}
   - component: {fileID: 2977150703037976660}
+  - component: {fileID: 2750816638099374987}
   m_Layer: 0
   m_Name: Airship
   m_TagString: Untagged
@@ -327,6 +536,13 @@ Transform:
   - {fileID: 1124151973071363239}
   - {fileID: 366311313214544371}
   - {fileID: 7190675612947718568}
+  - {fileID: 4189341325802040188}
+  - {fileID: 7258881202096553857}
+  - {fileID: 6257060981923298614}
+  - {fileID: 2865961057962511738}
+  - {fileID: 854663877560241992}
+  - {fileID: 1724962892570306084}
+  - {fileID: 6214322263334436945}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -355,10 +571,76 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &2750816638099374987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573465802837002580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b5e047788da354e87578315878d420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 2977150703037976660}
+  bombNode: {fileID: 3224073168651844053}
+  deathExplosionNodes:
+  - {fileID: 7258881202096553857}
+  - {fileID: 6257060981923298614}
+  - {fileID: 2865961057962511738}
+  - {fileID: 854663877560241992}
+  - {fileID: 1724962892570306084}
+  - {fileID: 6214322263334436945}
+  patrolPoint: {fileID: 0}
+  bombPrefab: {fileID: 4383026410946121262, guid: ec501bbe76856184b97c22b229071072,
+    type: 3}
+  deathExplosionPrefab: {fileID: 100006, guid: 0e45aec57f3e6034eb1fa662826d6351, type: 3}
+  deathExplosionAudioPrefab: {fileID: 1848272309219742988, guid: fb2b58a628457d44ea8ad1a6071fa784,
+    type: 3}
+  approachTolerance: 20
+  accelCoeff: 7
+  rotationRate: 10
+  bombInterval: 4
+  maxHealth: 4000
+  damageReduction: 9
+  deathExplosionDelayMin: 0.5
+  deathExplosionDelayMax: 1.5
+  finalExplosionScale: 6
+--- !u!1 &8470074599180778254
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2865961057962511738}
+  m_Layer: 0
+  m_Name: Death Explosion Node (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2865961057962511738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470074599180778254}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12.55, y: -1.46, z: 150.58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7573465802837002578}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9181246452111024897
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,15 +755,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca0d659ebde27cb4b8b4e949a2ff1854, type: 3}
---- !u!1 &7201435697173825936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7259283063324927117, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
-    type: 3}
-  m_PrefabInstance: {fileID: 526504306264829213}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9142541798868099970 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8768035354483707551, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
+    type: 3}
+  m_PrefabInstance: {fileID: 526504306264829213}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7201435697173825936 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7259283063324927117, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
     type: 3}
   m_PrefabInstance: {fileID: 526504306264829213}
   m_PrefabAsset: {fileID: 0}
@@ -894,15 +1176,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca0d659ebde27cb4b8b4e949a2ff1854, type: 3}
---- !u!1 &983047480337395295 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7259283063324927117, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
-    type: 3}
-  m_PrefabInstance: {fileID: 7573465802819996370}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1203598779995309133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8768035354483707551, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
+    type: 3}
+  m_PrefabInstance: {fileID: 7573465802819996370}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &983047480337395295 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7259283063324927117, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
     type: 3}
   m_PrefabInstance: {fileID: 7573465802819996370}
   m_PrefabAsset: {fileID: 0}
@@ -1197,15 +1479,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca0d659ebde27cb4b8b4e949a2ff1854, type: 3}
---- !u!4 &1203598781115809442 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8768035354483707551, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
-    type: 3}
-  m_PrefabInstance: {fileID: 7573465803674185789}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &983047481496212656 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7259283063324927117, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
+    type: 3}
+  m_PrefabInstance: {fileID: 7573465803674185789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1203598781115809442 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8768035354483707551, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
     type: 3}
   m_PrefabInstance: {fileID: 7573465803674185789}
   m_PrefabAsset: {fileID: 0}
@@ -1298,15 +1580,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca0d659ebde27cb4b8b4e949a2ff1854, type: 3}
---- !u!1 &983047481926793141 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7259283063324927117, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
-    type: 3}
-  m_PrefabInstance: {fileID: 7573465804384719672}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1203598780553371047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8768035354483707551, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
+    type: 3}
+  m_PrefabInstance: {fileID: 7573465804384719672}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &983047481926793141 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7259283063324927117, guid: ca0d659ebde27cb4b8b4e949a2ff1854,
     type: 3}
   m_PrefabInstance: {fileID: 7573465804384719672}
   m_PrefabAsset: {fileID: 0}
