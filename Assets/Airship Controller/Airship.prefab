@@ -611,6 +611,7 @@ MonoBehaviour:
   deathExplosionDelayMin: 0.5
   deathExplosionDelayMax: 1.5
   finalExplosionScale: 6
+  targetTownCount: 5
 --- !u!1 &8470074599180778254
 GameObject:
   m_ObjectHideFlags: 0

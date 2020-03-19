@@ -318,12 +318,13 @@ MonoBehaviour:
     type: 3}
   bombNode: {fileID: 2691443189610301878}
   pivotNode: {fileID: 235793369824484576}
-  fireDelay: 1.5
+  fireDelayMin: 3
+  fireDelayMax: 5
   parentRb: {fileID: 0}
   aggroRadius: 500
   loseAggroRadius: 600
   rotationRate: 30
-  pitchMin: -70
+  pitchMin: -80
   pitchMax: 0
   fireAngleMax: 15
   maxHealth: 150

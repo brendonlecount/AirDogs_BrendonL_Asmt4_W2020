@@ -126,7 +126,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9004103948085048656
 MonoBehaviour:
@@ -144,7 +144,7 @@ MonoBehaviour:
   speed: 120
   damage: 25
   explosionRadius: 10
-  rangeMin: 20
+  rangeMin: 50
   rangeMax: 500
   explosionEffect: {fileID: 2879966367669487983, guid: 026bd9074ae84724485385c4d29fa7c9,
     type: 3}

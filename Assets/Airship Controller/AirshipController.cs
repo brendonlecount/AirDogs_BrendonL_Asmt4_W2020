@@ -20,7 +20,15 @@ public class AirshipController : MonoBehaviour, IDamageable
 	[SerializeField] private float deathExplosionDelayMin;
 	[SerializeField] private float deathExplosionDelayMax;
 	[SerializeField] private float finalExplosionScale;
+	[SerializeField] private int targetTownCount;
 
+	public delegate void TownDestructionDelegate(int townsRemaining);
+	public event TownDestructionDelegate onTownDestroyed;
+
+	public delegate void DestructionDelegate();
+	public event DestructionDelegate onAirshipDestroyed;
+
+	public int TargetTownCount => targetTownCount;
 	public float HealthFraction => health / maxHealth;
 
 	private static AirshipController instance;
@@ -89,6 +97,11 @@ public class AirshipController : MonoBehaviour, IDamageable
 			bombRoutine = null;
 		}
 		holdRoutine = null;
+		if (patrolPoint.DropBombs)
+		{
+			targetTownCount--;
+			onTownDestroyed?.Invoke(targetTownCount);
+		}
 		patrolPoint = patrolPoint.NextPoint;
 	}
 
@@ -133,5 +146,6 @@ public class AirshipController : MonoBehaviour, IDamageable
 		GameObject go = Instantiate(deathExplosionPrefab, transform.position, Quaternion.identity);
 		go.transform.localScale = go.transform.localScale * finalExplosionScale;
 		Instantiate(deathExplosionAudioPrefab, transform.position, Quaternion.identity);
+		onAirshipDestroyed?.Invoke();
 	}
 }

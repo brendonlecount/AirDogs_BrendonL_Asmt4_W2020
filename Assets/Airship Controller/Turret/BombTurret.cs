@@ -9,7 +9,9 @@ public class BombTurret : MonoBehaviour, IDamageable
 	[SerializeField] private TurretBomb turretBombPrefab;
 	[SerializeField] private Transform bombNode;
 	[SerializeField] private Transform pivotNode;
-	[SerializeField] private float fireDelay;
+	[SerializeField] private float fireDelayMin;
+	[SerializeField] private float fireDelayMax;
+	private float fireDelay => Random.Range(fireDelayMin, fireDelayMax);
 	[SerializeField] private Rigidbody parentRb;
 	[SerializeField] private float aggroRadius;
 	[SerializeField] private float loseAggroRadius;
@@ -55,7 +57,7 @@ public class BombTurret : MonoBehaviour, IDamageable
 		Quaternion aimRotation = Quaternion.LookRotation(aimPoint - pivotNode.position, Vector3.up);
 		Vector3 aimEulers = aimRotation.eulerAngles;
 		aimRotation = Quaternion.Euler(Mathf.Clamp(aimEulers.x, pitchMin, pitchMax), aimEulers.y, aimEulers.z);
-		pivotNode.localRotation = Quaternion.RotateTowards(pivotNode.localRotation, aimRotation, rotationRate * Time.deltaTime);
+		pivotNode.rotation = Quaternion.RotateTowards(pivotNode.rotation, aimRotation, rotationRate * Time.deltaTime);
 		isOnTarget = Vector3.Angle(pivotNode.forward, aimPoint - pivotNode.position) <= fireAngleMax;
 	}
 
@@ -70,16 +72,18 @@ public class BombTurret : MonoBehaviour, IDamageable
 		while (true)
 		{
 			yield return new WaitForSeconds(fireDelay);
-			if (aggroTarget != null && isOnTarget)
+			if (aggroTarget != null)
 			{
-				Fire();
+				if (isOnTarget)
+				{
+					Fire();
+				}
 			}
 		}
 	}
 
 	public void TakeDamage(float damage)
 	{
-		Debug.Log("Turret took damage! " + health.ToString("N0"));
 		if (health > damage)
 		{
 			health -= damage;

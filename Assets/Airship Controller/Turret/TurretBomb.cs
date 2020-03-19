@@ -15,8 +15,8 @@ public class TurretBomb : MonoBehaviour, IDamageable
 
 	public float Speed => speed;
 
-	private float lifetime;
-	private float armTime;
+	private float lifetime = Mathf.Infinity;
+	private float armTime = Mathf.Infinity;
 	private float lifeTimer = 0f;
 	private bool exploded = false;
 
