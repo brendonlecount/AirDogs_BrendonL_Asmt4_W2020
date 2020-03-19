@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script drives a BiplaneController via player input.
+
 public class PlayerInput : BiplaneControl
 {
 	[Header("Settings")]

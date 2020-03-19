@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements a non-hitscan projectile that works via raycast.
+
 public class Projectile : MonoBehaviour
 {
 	[SerializeField] private float speed;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements a machine gun (initially mounted on a biplane wing, hence the name.)
+
 public class WingGun : MonoBehaviour
 {
 	[SerializeField] private Rigidbody rb;

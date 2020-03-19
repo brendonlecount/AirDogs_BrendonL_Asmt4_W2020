@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Brendon LeCount 3/18/2020
+// This script implements a speedometer displayed on the HUD.
+
 public class Speedometer : MonoBehaviour
 {
 	[SerializeField] private Text speedometerText;

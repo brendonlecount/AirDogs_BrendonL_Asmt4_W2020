@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script manages an expandable pool of projectiles.
+
 public class ProjectileManager : MonoBehaviour
 {
 	[SerializeField] private GameObject projectilePrefab;

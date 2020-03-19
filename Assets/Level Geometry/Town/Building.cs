@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements the IDamageable interface for a destructible building.
+
 public class Building : MonoBehaviour, IDamageable
 {
 	[SerializeField] private GameObject deathExplosionPrefab;

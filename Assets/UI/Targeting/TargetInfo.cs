@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Brendon LeCount 3/18/2020
+// This script displays target info as part of the targeting HUD.
+
 public class TargetInfo : MonoBehaviour
 {
 	[SerializeField] private GameObject ratingPrefab;

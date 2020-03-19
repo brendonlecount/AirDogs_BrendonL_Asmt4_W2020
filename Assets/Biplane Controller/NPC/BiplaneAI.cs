@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script manages biplane AI behaviors.
+
 public class BiplaneAI : BiplaneControl
 {
 	[Header("Biplane AI Properties")]

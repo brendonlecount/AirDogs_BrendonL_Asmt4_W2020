@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements the follow biplane behavior AI state.
+
 public class FollowBiplaneBehavior : BiplaneBehavior
 {
 	[SerializeField] private float followDistance;

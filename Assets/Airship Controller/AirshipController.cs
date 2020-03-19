@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// Brendon LeCount 3/18/2020
+// This script controls an enemy airship.
+
 public class AirshipController : MonoBehaviour, IDamageable
 {
 	[SerializeField] private Rigidbody rb;

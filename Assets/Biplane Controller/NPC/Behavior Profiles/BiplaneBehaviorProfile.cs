@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements a scriptable object containing data defining an AI profile.
+
 [CreateAssetMenu(fileName = "BiplaneBehaviorProfile", menuName = "ScriptableObjects/Biplane Behavior Profile", order = 1)]
 public class BiplaneBehaviorProfile : ScriptableObject
 {

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements biplane bombing.
+
 public class Bomber : MonoBehaviour
 {
 	[SerializeField] private Bomb bombPrefab;

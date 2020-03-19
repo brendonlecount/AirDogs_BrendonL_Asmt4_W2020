@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script is a character controller for a biplane.
+
 public class BiplaneController : MonoBehaviour, IDamageable
 {
 	[Header("Components")]

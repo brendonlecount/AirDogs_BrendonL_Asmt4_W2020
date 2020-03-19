@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// This manager creates a centralized manager where layer masks can be maintained.
+// Brendon LeCount 3/18/2020
+// This manager creates a centralized gameobject where layer masks can be maintained, similar to the layer collision settings matrix in project settings.
 
 public class LayerMaskManager : MonoBehaviour
 {

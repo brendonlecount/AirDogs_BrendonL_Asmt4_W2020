@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Brendon LeCount 3/18/2020
+// This script implements a targeting HUD.
+
 public class Targeting : MonoBehaviour
 {
 	private class TargetIcon

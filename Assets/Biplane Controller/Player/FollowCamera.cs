@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements a first/third/orbit camera that follows a biplane controlled by a PlayerInput script.
 
 public enum CameraModes { First, Follow, Orbit, Pilot }
 

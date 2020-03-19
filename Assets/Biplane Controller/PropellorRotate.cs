@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script rotates a propellor.
+
 public class PropellorRotate : MonoBehaviour
 {
 	public enum SpinState { Stopped, SpinningUp, Spinning, SpinningDown }

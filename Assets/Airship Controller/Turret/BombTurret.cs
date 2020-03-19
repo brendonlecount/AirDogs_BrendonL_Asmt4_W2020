@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script is a character controller and AI for a turret that launches bombs.
+
 public class BombTurret : MonoBehaviour, IDamageable
 {
 	[SerializeField] private GameObject deathExplosionPrefab;

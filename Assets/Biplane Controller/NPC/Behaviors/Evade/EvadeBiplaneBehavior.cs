@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements the evasion biplane AI state.
+
 public class EvadeBiplaneBehavior : BiplaneBehavior
 {
 	[SerializeField] private float evadeTimeMin;

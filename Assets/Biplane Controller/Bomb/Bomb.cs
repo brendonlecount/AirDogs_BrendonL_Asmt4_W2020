@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script is a character controller for a bomb that explodes on impact.
+
 public class Bomb : MonoBehaviour, IDamageable
 {
 	[SerializeField] private GameObject explosionPrefab;

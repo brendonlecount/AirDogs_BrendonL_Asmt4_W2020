@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script keeps track of all of the biplanes that can be targeted, and their faction.
+
 public class TargetManager : MonoBehaviour
 {
 	private static TargetManager instance = null;

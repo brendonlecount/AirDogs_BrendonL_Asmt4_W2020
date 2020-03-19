@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Brendon LeCount 3/18/2020
+// This script implements an altimeter on the HUD.
+
 public class Altimeter : MonoBehaviour
 {
 	[SerializeField] private Text altimeterText;

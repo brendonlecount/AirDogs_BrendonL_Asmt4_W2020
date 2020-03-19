@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Brendon LeCount 3/18/2020
+// This script implements a game manager that manages the island defense level.
+
 public class GameManager : MonoBehaviour
 {
 	[SerializeField] private float resetDelay;

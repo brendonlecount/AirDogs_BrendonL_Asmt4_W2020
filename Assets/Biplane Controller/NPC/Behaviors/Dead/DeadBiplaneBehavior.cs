@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements the biplane death behaviour AI state.
+
 public class DeadBiplaneBehavior : BiplaneBehavior
 {
 	public override void EnterBehavior()

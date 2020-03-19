@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script is a base class for biplane AI behaviors, containing utility functions and data used by the various child behaviors.
+
 public enum BiplaneBehaviorCode { Takeoff, Follow, Patrol, Evade, Attack, Dead }
 
 public abstract class BiplaneBehavior : MonoBehaviour

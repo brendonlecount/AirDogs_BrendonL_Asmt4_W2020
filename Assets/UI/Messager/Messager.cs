@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Brendon LeCount 3/18/2020
+// This script posts messages to the HUD for the specified duration.
+
 public class Messager : MonoBehaviour
 {
 	[SerializeField] private Text messageText;

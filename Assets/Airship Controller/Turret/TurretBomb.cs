@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script is a character controller for a turret bomb that explodes once it's within range of a TargetTrigger.
+
 public class TurretBomb : MonoBehaviour, IDamageable
 {
 	[SerializeField] private Rigidbody rb;

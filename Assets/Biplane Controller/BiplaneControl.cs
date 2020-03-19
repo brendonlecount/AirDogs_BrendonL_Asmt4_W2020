@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script is a base class for driving a biplane controller, extended by a player input script or AI script.
+
 public class BiplaneControl : MonoBehaviour
 {
 	[Header("Biplane Control Components")]

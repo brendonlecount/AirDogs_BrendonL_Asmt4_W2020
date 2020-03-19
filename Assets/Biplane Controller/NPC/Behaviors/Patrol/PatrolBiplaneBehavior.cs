@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Brendon LeCount 3/18/2020
+// This script implements the patrol biplane AI behaviour state.
+
 public class PatrolBiplaneBehavior : BiplaneBehavior
 {
 	[SerializeField] private float patrolRadius;

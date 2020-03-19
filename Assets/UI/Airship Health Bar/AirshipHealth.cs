@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Brendon LeCount 3/18/2020
+// This script controls a health gauge for the enemy airship.
 
 public class AirshipHealth : MonoBehaviour
 {

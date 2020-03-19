@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Brendon LeCount 3/18/2020
+// This script displays the number of remaining towns in the HUD.
+
 public class TownCounter : MonoBehaviour
 {
 	[SerializeField] private Text counterText;
